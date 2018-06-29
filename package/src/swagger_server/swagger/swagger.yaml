@@ -1,0 +1,220 @@
+---
+swagger: "2.0"
+info:
+  description: ""
+  version: "0.1.0"
+  title: "BigchaindDB API"
+host: "localhost:8080"
+basePath: "/v0.1"
+tags:
+- name: "BigchaindDB API"
+  description: ""
+schemes:
+- "https"
+paths:
+  /course/get_all:
+    get:
+      tags:
+      - "course"
+      summary: "retrieve all courses"
+      description: ""
+      operationId: "get_all_courses"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: OK
+      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+  /course/create:
+    post:
+      tags:
+        - "course"
+      summary: "create a new course"
+      description: ""
+      operationId: "create_course"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Course object that needs to be added to the database"
+        required: true
+        schema:
+          $ref: "#/definitions/Course"
+      responses:
+        200:
+          description: OK
+        405:
+          description: "Invalid input"
+      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+  /degree/get_all:
+    get:
+      tags:
+      - "degree"
+      summary: "retrieve all degrees"
+      description: ""
+      operationId: "get_all_degrees"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: OK
+        405:
+          description: "Could not reach BigchainDB"
+      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+  /degree/create:
+    post:
+      tags:
+        - "degree"
+      summary: "create a new degree"
+      description: ""
+      operationId: "create_degree"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Degree object that needs to be added to the database"
+        required: true
+        schema:
+          $ref: "#/definitions/Degree"
+      responses:
+        200:
+          description: OK
+        405:
+          description: "Invalid input"
+      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+  /degree/update_course_list:
+    post:
+      tags:
+        - "degree"
+      summary: "update the list of courses that belong the a degree"
+      description: ""
+      operationId: "update_degree_course_list"
+      consumes:
+      - "application/json"
+      responses:
+        200:
+          description: OK
+      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+  /mark/create:
+    post:
+      tags:
+        - "mark"
+      summary: "create a new mark"
+      description: ""
+      operationId: "create_mark"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Mark object that needs to be added to the database"
+        required: true
+        schema:
+          $ref: "#/definitions/Mark"
+      responses:
+        200:
+          description: OK
+        405:
+          description: "Invalid input"
+      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+  /mark/get_marks/{student_address}:
+    get:
+      tags:
+      - "mark"
+      summary: "returns all marks for a particular student"
+      operationId: "get_marks_by_address"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "student_address"
+        in: "path"
+        description: "ID of student to return"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: OK
+      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+definitions:
+  Course:
+    type: "object"
+    properties:
+      asset:
+        type: "object"
+        properties:
+          data:
+            type: "object"
+            properties:
+              course:
+                type: "object"
+                properties:
+                  name:
+                    type: "string"
+                  description:
+                    type: "string"
+                  id:
+                    type: "string"
+      metadata:
+        type: "object"
+        properties:
+          passing:
+            type: "integer"
+          distinction:
+            type: "integer"
+    xml:
+      name: "Course"
+  Degree:
+    type: "object"
+    properties:
+      asset:
+        type: "object"
+        properties:
+          data:
+            type: "object"
+            properties:
+              degree:
+                type: "object"
+                properties:
+                  name:
+                    type: "string"
+                  level:
+                    type: "string"
+                  description:
+                    type: "string"
+                  id:
+                    type: "string"
+      metadata:
+        type: "object"
+        properties:
+          courses:
+            type: "array"
+            items: {}
+    xml:
+      name: "Degree"
+  Mark:
+    type: "object"
+    properties:
+      asset:
+        type: "object"
+        properties:
+          data:
+            type: "object"
+            properties:
+              mark:
+                type: "object"
+                properties:
+                  student:
+                    type: "string"
+                  course:
+                    type: "string"
+                  degree:
+                    type: "string"
+      metadata:
+        type: "object"
+        properties:
+          mark:
+            type: "integer"
+    xml:
+      name: "Degree"
