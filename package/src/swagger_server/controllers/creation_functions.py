@@ -6,19 +6,7 @@ from .general_functions import _fulfill_transaction, _send_transaction
 
 BDB = BigchainDB(os.getenv("BDB_ROOT_URL"))
 
-def _create_course(asset, metadata, admin):
-    transaction_id = _process_creation(asset, metadata, admin)
-    return transaction_id
-
-def _create_degree(asset, metadata, admin):
-    transaction_id = _process_creation(asset, metadata, admin)
-    return transaction_id
-
-def _create_mark(asset, metadata, admin):
-    transaction_id = _process_creation(asset, metadata, admin)
-    return transaction_id
-
-def _process_creation(asset, metadata, user):
+def _create(asset, metadata, user):
     transaction = _prepare_create_transaction(asset, metadata, user.public_key)
     signed_transaction = _fulfill_transaction(transaction, user.private_key)
     receipt = _send_transaction(signed_transaction)
