@@ -12,35 +12,37 @@ tags:
 schemes:
 - "https"
 paths:
-  /course/get_all:
+  /university/get_all:
     get:
       tags:
-      - "course"
-      summary: "retrieve all courses"
+      - "university"
+      summary: "retrieve all universities"
       description: ""
-      operationId: "get_all_courses"
+      operationId: "get_all_universities"
       produces:
       - "application/json"
       responses:
         200:
           description: OK
+        405:
+          description: "Could not reach BigchainDB"
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
-  /course/create:
+  /university/create:
     post:
       tags:
-        - "course"
-      summary: "create a new course"
+        - "university"
+      summary: "create a new university"
       description: ""
-      operationId: "create_course"
+      operationId: "create_university"
       consumes:
       - "application/json"
       parameters:
       - in: "body"
         name: "body"
-        description: "Course object that needs to be added to the database"
+        description: "University object that needs to be added to the database"
         required: true
         schema:
-          $ref: "#/definitions/Course"
+          $ref: "#/definitions/University"
       responses:
         200:
           description: OK
@@ -84,18 +86,238 @@ paths:
         405:
           description: "Invalid input"
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
-  /degree/update_course_list:
+  /degree/append_courses:
     post:
       tags:
         - "degree"
-      summary: "update the list of courses that belong the a degree"
+      summary: "append the list of courses that belong to a degree"
       description: ""
-      operationId: "update_degree_course_list"
+      operationId: "degree_append_courses"
       consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "List of courses and their weightings"
+        required: true
+        schema:
+          $ref: "#/definitions/DegreeAppendCourses"
+      responses:
+        200:
+          description: OK
+        405:
+          description: "Invalid input"
+      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+  /degree/delete_course:
+    post:
+      tags:
+        - "degree"
+      summary: "delete one course from the degree by course_id"
+      description: ""
+      operationId: "degree_delete_course"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Degree object that needs to be added to the database"
+        required: true
+        schema:
+          $ref: "#/definitions/DegreeDeleteCourse"
+      responses:
+        200:
+          description: OK
+        405:
+          description: "Invalid input"
+      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+  /course/get_all:
+    get:
+      tags:
+      - "course"
+      summary: "retrieve all courses"
+      description: ""
+      operationId: "get_all_courses"
+      produces:
       - "application/json"
       responses:
         200:
           description: OK
+      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+  /course/create:
+    post:
+      tags:
+        - "course"
+      summary: "create a new course"
+      description: ""
+      operationId: "create_course"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Course object that needs to be added to the database"
+        required: true
+        schema:
+          $ref: "#/definitions/Course"
+      responses:
+        200:
+          description: OK
+        405:
+          description: "Invalid input"
+      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+  /course/update_passing:
+    post:
+      tags:
+        - "course"
+      summary: "update the passing threshold of a course"
+      description: ""
+      operationId: "course_update_passing"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "course id and new passing threshold"
+        required: true
+        schema:
+          $ref: "#/definitions/CourseUpdatePassing"
+      responses:
+        200:
+          description: OK
+        405:
+          description: "Invalid input"
+      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+  /course/update_distinction:
+    post:
+      tags:
+        - "course"
+      summary: "update the distinction threshold of a course"
+      description: ""
+      operationId: "course_update_distinction"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "course id and new distinction threshold"
+        required: true
+        schema:
+          $ref: "#/definitions/CourseUpdateDistinction"
+      responses:
+        200:
+          description: OK
+        405:
+          description: "Invalid input"
+      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+  /course/update_components:
+    post:
+      tags:
+        - "course"
+      summary: "update the components of a course"
+      description: ""
+      operationId: "course_update_components"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "resubmit the whole component structure"
+        required: true
+        schema:
+          $ref: "#/definitions/CourseUpdateComponents"
+      responses:
+        200:
+          description: OK
+        405:
+          description: "Invalid input"
+      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+  /course/add_prerequisite:
+    post:
+      tags:
+        - "course"
+      summary: "add a prerequisite to a course"
+      description: ""
+      operationId: "course_add_prerequisite"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "course id and prerequisite id"
+        required: true
+        schema:
+          $ref: "#/definitions/CoursePrerequisite"
+      responses:
+        200:
+          description: OK
+        405:
+          description: "Invalid input"
+      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+  /course/delete_prerequisite:
+    post:
+      tags:
+        - "course"
+      summary: "delete a prerequisite from a course"
+      description: ""
+      operationId: "course_delete_prerequisite"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "course id and prerequisite id"
+        required: true
+        schema:
+          $ref: "#/definitions/CoursePrerequisite"
+      responses:
+        200:
+          description: OK
+        405:
+          description: "Invalid input"
+      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+  /course/add_corequisite:
+    post:
+      tags:
+        - "course"
+      summary: "add a corequisite to a course"
+      description: ""
+      operationId: "course_add_corequisite"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "course id and corequisite id"
+        required: true
+        schema:
+          $ref: "#/definitions/CourseCorequisite"
+      responses:
+        200:
+          description: OK
+        405:
+          description: "Invalid input"
+      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+  /course/delete_corequisite:
+    post:
+      tags:
+        - "course"
+      summary: "delete a corequisite from a course"
+      description: ""
+      operationId: "course_delete_corequisite"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "course id and corequisite id"
+        required: true
+        schema:
+          $ref: "#/definitions/CourseCorequisite"
+      responses:
+        200:
+          description: OK
+        405:
+          description: "Invalid input"
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
   /mark/create:
     post:
@@ -137,8 +359,30 @@ paths:
         200:
           description: OK
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+  /mark/update:
+    post:
+      tags:
+        - "mark"
+      summary: "update a student's mark"
+      description: ""
+      operationId: "mark_update"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "mark id and new mark"
+        required: true
+        schema:
+          $ref: "#/definitions/MarkUpdate"
+      responses:
+        200:
+          description: OK
+        405:
+          description: "Invalid input"
+      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
 definitions:
-  Course:
+  University:
     type: "object"
     properties:
       asset:
@@ -147,24 +391,26 @@ definitions:
           data:
             type: "object"
             properties:
-              course:
+              university:
                 type: "object"
                 properties:
                   name:
                     type: "string"
-                  description:
+                  short:
                     type: "string"
-                  id:
+                  physical_address:
+                    type: "string"
+                  postal_address:
                     type: "string"
       metadata:
         type: "object"
         properties:
-          passing:
-            type: "integer"
-          distinction:
-            type: "integer"
+          courses:
+            type: "array"
+            items: 
+              type: "string"
     xml:
-      name: "Course"
+      name: "University"
   Degree:
     type: "object"
     properties:
@@ -190,9 +436,67 @@ definitions:
         properties:
           courses:
             type: "array"
-            items: {}
+            items: 
+              type: "object"
+              properties:
+                course_address:
+                  type: "string"
+                weighting:
+                  type: "number"
+                  format: "float"
+                  minimum: 0
+                  maximum: 1
     xml:
       name: "Degree"
+  Course:
+    type: "object"
+    properties:
+      asset:
+        type: "object"
+        properties:
+          data:
+            type: "object"
+            properties:
+              course:
+                type: "object"
+                properties:
+                  name:
+                    type: "string"
+                  description:
+                    type: "string"
+                  id:
+                    type: "string"
+      metadata:
+        type: "object"
+        properties:
+          passing:
+            type: "integer"
+          distinction:
+            type: "integer"
+          components:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                type:
+                  type: "string"
+                weighting:
+                  type: "number"
+                  format: "float"
+                  minimum: 0
+                  maximum: 1
+                required:
+                  type: "boolean"
+          prerequisite:
+            type: "array"
+            items:
+              type: "string"
+          corequisite:
+            type: "array"
+            items:
+              type: "string"
+    xml:
+      name: "Course"
   Mark:
     type: "object"
     properties:
@@ -205,16 +509,113 @@ definitions:
               mark:
                 type: "object"
                 properties:
-                  student:
+                  student_address:
                     type: "string"
-                  course:
+                  course_id:
                     type: "string"
-                  degree:
+                  type:
                     type: "string"
       metadata:
         type: "object"
         properties:
           mark:
             type: "integer"
+            minimum: 0
+            maximum: 100
     xml:
-      name: "Degree"
+      name: "Mark"
+  DegreeAppendCourses:
+    type: "object"
+    properties:
+      degree_id:
+        type: "string"
+      courses:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            course_id:
+              type: "string"
+            weighting:
+              type: "number"
+              format: "float"
+              minimum: 0
+              maximum: 1
+    xml:
+      name: "DegreeAppendCourses"
+  DegreeDeleteCourse:
+    type: "object"
+    properties:
+      degree_id:
+        type: "string"
+      course_id:
+        type: "string"
+    xml:
+      name: "DegreeDeleteCourse"
+  CourseUpdatePassing:
+    type: "object"
+    properties:
+      course_id:
+        type: "string"
+      passing:
+        type: "integer"
+        minimum: 0
+        maximum: 100
+    xml:
+      name: "CourseUpdatePassing"
+  CourseUpdateDistinction:
+    type: "object"
+    properties:
+      course_id:
+        type: "string"
+      distinction:
+        type: "integer"
+        minimum: 0
+        maximum: 100
+    xml:
+      name: "CourseUpdateDistinction"
+  CourseUpdateComponents:
+    type: "array"
+    items:
+      type: "object"
+      properties:
+        type:
+          type: "string"
+        weighting:
+          type: "number"
+          format: "float"
+          minimum: 0
+          maximum: 1
+        required:
+          type: "boolean"
+    xml:
+      name: "CourseUpdateComponents"
+  CoursePrerequisite:
+    type: "object"
+    properties:
+      course_id:
+        type: "string"
+      prerequisite_id:
+        type: "string"
+    xml:
+      name: "CoursePrerequisite"
+  CourseCorequisite:
+    type: "object"
+    properties:
+      course_id:
+        type: "string"
+      corequisite_id:
+        type: "string"
+    xml:
+      name: "CourseCorequisite"
+  MarkUpdate:
+    type: "object"
+    properties:
+      mark_id:
+        type: "string"
+      mark:
+        type: "integer"
+        minimum: 0
+        maximum: 100
+    xml:
+      name: "MarkUpdate"
