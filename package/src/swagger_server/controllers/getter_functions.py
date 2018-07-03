@@ -1,22 +1,21 @@
 from .global_vars import BDB
 
-def _get_all_universities():
-    return BDB.assets.get(search='university')
+def _get_all_assets(asset_type):
+    files = BDB.assets.get(search=asset_type)
+    assets = []
+    for f in files:
+        if f.get('data').get('asset_type') == asset_type:
+            assets.append(f)
+    return assets 
 
-def _get_all_degrees():
-    return BDB.assets.get(search='degree')
-
-def _get_all_courses():
-    return BDB.assets.get(search='course')
-
-def _get_university_files(university_name, filetype):
+def _get_assets_by_university(university_name, asset_type):
     university = BDB.assets.get(search=university_name)
     if len(university) == 1:
         university_id = university[0].get('id')
-        all_files = BDB.assets.get(search=filetype)
+        all_files = _get_all_assets(asset_type)
         university_files = []
         for f in all_files:
-            if f.get('data').get(filetype).get('university_id') == university_id:
+            if f.get('data').get('university_id') == university_id:
                 university_files.append(f)
         return university_files
     elif len(university) < 1:
@@ -28,10 +27,10 @@ def _get_marks_by_address(address):
     course_marks = []
     marks = BDB.assets.get(search=address)
     for mark in marks:
-        mark_type = mark.get('data').get('mark').get('type')
-        course_id = mark.get('data').get('mark').get('course')
+        mark_type = mark.get('data').get('type')
+        course_id = mark.get('data').get('course')
         course_transaction = BDB.transactions.get(asset_id=course_id)
-        course = course_transaction[0].get('asset').get('data').get('course').get('name')
+        course = course_transaction[0].get('asset').get('data').get('name')
         mark_id =  mark.get('id')
         course_components = course_transaction[-1].get('metadata').get('components')
         for c in course_components:

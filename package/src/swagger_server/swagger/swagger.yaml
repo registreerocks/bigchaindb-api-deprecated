@@ -427,17 +427,17 @@ definitions:
           data:
             type: "object"
             properties:
-              university:
-                type: "object"
-                properties:
-                  name:
-                    type: "string"
-                  short:
-                    type: "string"
-                  physical_address:
-                    type: "string"
-                  postal_address:
-                    type: "string"
+              asset_type:
+                type: "string"
+                default: "university"
+              name:
+                type: "string"
+              short:
+                type: "string"
+              physical_address:
+                type: "string"
+              postal_address:
+                type: "string"
       metadata:
         type: "object"
         properties:
@@ -456,19 +456,19 @@ definitions:
           data:
             type: "object"
             properties:
-              degree:
-                type: "object"
-                properties:
-                  name:
-                    type: "string"
-                  level:
-                    type: "string"
-                  description:
-                    type: "string"
-                  id:
-                    type: "string"
-                  university_id:
-                    type: "string"
+              asset_type:
+                type: "string"
+                default: "degree"
+              name:
+                type: "string"
+              level:
+                type: "string"
+              description:
+                type: "string"
+              id:
+                type: "string"
+              university_id:
+                type: "string"
       metadata:
         type: "object"
         properties:
@@ -495,17 +495,17 @@ definitions:
           data:
             type: "object"
             properties:
-              course:
-                type: "object"
-                properties:
-                  name:
-                    type: "string"
-                  description:
-                    type: "string"
-                  id:
-                    type: "string"
-                  university_id:
-                    type: "string"
+              asset_type:
+                type: "string"
+                default: "course"
+              name:
+                type: "string"
+              description:
+                type: "string"
+              id:
+                type: "string"
+              university_id:
+                type: "string"
       metadata:
         type: "object"
         properties:
@@ -546,15 +546,15 @@ definitions:
           data:
             type: "object"
             properties:
-              mark:
-                type: "object"
-                properties:
-                  student_address:
-                    type: "string"
-                  course_id:
-                    type: "string"
-                  type:
-                    type: "string"
+              asset_type:
+                type: "string"
+                default: "mark"
+              student_address:
+                type: "string"
+              course_id:
+                type: "string"
+              type:
+                type: "string"
       metadata:
         type: "object"
         properties:
