@@ -54,7 +54,7 @@ paths:
       tags:
       - "university"
       summary: "returns all degrees of a university"
-      operationId: "get_university_degrees"
+      operationId: "university_get_degrees"
       produces:
       - "application/json"
       parameters:
@@ -72,7 +72,7 @@ paths:
       tags:
       - "university"
       summary: "returns all courses of a university"
-      operationId: "get_university_courses"
+      operationId: "university_get_courses"
       produces:
       - "application/json"
       parameters:
