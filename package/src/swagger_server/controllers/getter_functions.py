@@ -1,8 +1,4 @@
-import os
-
-from bigchaindb_driver import BigchainDB
-
-BDB = BigchainDB(os.getenv("BDB_ROOT_URL"))
+from .global_vars import BDB
 
 def _get_all_universities():
     return BDB.assets.get(search='university')

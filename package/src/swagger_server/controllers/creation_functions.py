@@ -1,10 +1,5 @@
-import os
-
-from bigchaindb_driver import BigchainDB
-
 from .general_functions import _fulfill_transaction, _send_transaction
-
-BDB = BigchainDB(os.getenv("BDB_ROOT_URL"))
+from .global_vars import BDB
 
 def _create(asset, metadata, user):
     transaction = _prepare_create_transaction(asset, metadata, user.public_key)

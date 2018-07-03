@@ -1,10 +1,5 @@
-import os
-
-from bigchaindb_driver import BigchainDB
-
 from .general_functions import _fulfill_transaction, _send_transaction
-
-BDB = BigchainDB(os.getenv("BDB_ROOT_URL"))
+from .global_vars import BDB
 
 def _degree_append_courses(asset_id, courses, admin):
     tx, tx_id = _get_last_transaction(asset_id)

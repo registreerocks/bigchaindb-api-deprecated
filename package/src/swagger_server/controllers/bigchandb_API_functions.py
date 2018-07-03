@@ -1,5 +1,3 @@
-from bigchaindb_driver.crypto import generate_keypair
-
 from .creation_functions import _create
 from .getter_functions import (_get_all_courses, _get_all_degrees,
                                _get_all_universities, _get_marks_by_address)
@@ -7,7 +5,7 @@ from .update_functions import (_course_add_requisite, _course_delete_requisite,
                                _degree_append_courses, _degree_delete_course,
                                _update_metadata_component)
 
-ADMIN = generate_keypair()
+from .global_vars import ADMIN
 
 def create_university(data, metadata):
     return _create(data, metadata, ADMIN)

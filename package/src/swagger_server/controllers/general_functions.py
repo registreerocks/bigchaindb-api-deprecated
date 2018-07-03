@@ -1,8 +1,4 @@
-import os
-
-from bigchaindb_driver import BigchainDB
-
-BDB = BigchainDB(os.getenv("BDB_ROOT_URL"))
+from .global_vars import BDB
 
 def _fulfill_transaction(transaction, key):
     return BDB.transactions.fulfill(transaction, private_keys=key)
