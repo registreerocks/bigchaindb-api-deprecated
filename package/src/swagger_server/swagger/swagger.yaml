@@ -49,6 +49,42 @@ paths:
         405:
           description: "Invalid input"
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+  /university/get_degrees/{university_name}:
+    get:
+      tags:
+      - "university"
+      summary: "returns all degrees of a university"
+      operationId: "get_university_degrees"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "university_name"
+        in: "path"
+        description: "name of the university"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: OK
+      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+  /university/get_courses/{university_name}:
+    get:
+      tags:
+      - "university"
+      summary: "returns all courses of a university"
+      operationId: "get_university_courses"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "university_name"
+        in: "path"
+        description: "name of the university"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: OK
+      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
   /degree/get_all:
     get:
       tags:

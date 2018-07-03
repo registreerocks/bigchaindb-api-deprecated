@@ -9,6 +9,21 @@ def _get_all_degrees():
 def _get_all_courses():
     return BDB.assets.get(search='course')
 
+def _get_university_files(university_name, filetype):
+    university = BDB.assets.get(search=university_name)
+    if len(university) == 1:
+        university_id = university[0].get('id')
+        all_files = BDB.assets.get(search=filetype)
+        university_files = []
+        for f in all_files:
+            if f.get('data').get(filetype).get('university_id') == university_id:
+                university_files.append(f)
+        return university_files
+    elif len(university) < 1:
+        return {'ERROR': 'No matching university found'}
+    else:
+        return {'ERROR': 'More than one matching university found. Refine your search.'}
+
 def _get_marks_by_address(address):
     course_marks = []
     marks = BDB.assets.get(search=address)

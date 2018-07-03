@@ -1,11 +1,12 @@
 from .creation_functions import _create
 from .getter_functions import (_get_all_courses, _get_all_degrees,
-                               _get_all_universities, _get_marks_by_address)
+                               _get_all_universities, _get_marks_by_address,
+                               _get_university_files)
+from .global_vars import ADMIN
 from .update_functions import (_course_add_requisite, _course_delete_requisite,
                                _degree_append_courses, _degree_delete_course,
                                _update_metadata_component)
 
-from .global_vars import ADMIN
 
 def create_university(body):
     return _create(body.get('asset'), body.get('metadata'), ADMIN)
@@ -38,25 +39,31 @@ def get_all_universities():
     return _get_all_universities()
 
 def course_update_passing(body):
-    _update_metadata_component('passing', body.get('course_id'), body.get('passing'), ADMIN)
+    return _update_metadata_component('passing', body.get('course_id'), body.get('passing'), ADMIN)
 
 def course_update_distinction(body):
-    _update_metadata_component('distinction', body.get('course_id'), body.get('distinction'), ADMIN)
+    return _update_metadata_component('distinction', body.get('course_id'), body.get('distinction'), ADMIN)
 
 def course_update_components(body):
-    _update_metadata_component('components', body.get('course_id'), body.get('components'), ADMIN)
+    return _update_metadata_component('components', body.get('course_id'), body.get('components'), ADMIN)
 
 def course_add_prerequisite(body):
-    _course_add_requisite('prerequisite', body.get('course_id'), body.get('prerequisite_id'), ADMIN)
+    return _course_add_requisite('prerequisite', body.get('course_id'), body.get('prerequisite_id'), ADMIN)
 
 def course_add_corequisite(body):
-    _course_add_requisite('corequisite', body.get('course_id'), body.get('corequisite_id'), ADMIN)
+    return _course_add_requisite('corequisite', body.get('course_id'), body.get('corequisite_id'), ADMIN)
 
 def course_delete_prerequisite(body):
-    _course_delete_requisite('prerequisite', body.get('course_id'), body.get('prerequisite_id'), ADMIN)
+    return _course_delete_requisite('prerequisite', body.get('course_id'), body.get('prerequisite_id'), ADMIN)
 
 def course_delete_corequisite(body):
-    _course_delete_requisite('corequisite', body.get('course_id'), body.get('corequisite_id'), ADMIN)
+    return _course_delete_requisite('corequisite', body.get('course_id'), body.get('corequisite_id'), ADMIN)
 
 def mark_update(body):
-     _update_metadata_component('mark', body.get('mark_id'), body.get('mark'), ADMIN)
+    return _update_metadata_component('mark', body.get('mark_id'), body.get('mark'), ADMIN)
+
+def university_get_degrees(university_name):
+    return _get_university_files(university_name, 'degree')
+
+def university_get_courses(university_name):
+    return _get_university_files(university_name, 'course')
