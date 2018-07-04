@@ -1,18 +1,23 @@
 from .global_vars import BDB
 
-def _get_all_assets(asset_type):
+def _get_all_assets(asset_type, meta_flag):
     files = BDB.assets.get(search=asset_type)
     assets = []
     for f in files:
         if f.get('data').get('asset_type') == asset_type:
-            assets.append(f)
+            if meta_flag:
+                asset_id = f.get('id')
+                metadata = BDB.transactions.get(asset_id=asset_id)[-1].get('metadata')
+                assets.append({**f, **{'metadata': metadata}})
+            else: 
+                assets.append(f)
     return assets 
 
-def _get_assets_by_university(university_name, asset_type):
+def _get_assets_by_university(university_name, meta_flag, asset_type):
     university = BDB.assets.get(search=university_name)
     if len(university) == 1:
         university_id = university[0].get('id')
-        all_files = _get_all_assets(asset_type)
+        all_files = _get_all_assets(asset_type, meta_flag)
         university_files = []
         for f in all_files:
             if f.get('data').get('university_id') == university_id:
@@ -20,7 +25,7 @@ def _get_assets_by_university(university_name, asset_type):
         return university_files
     elif len(university) < 1:
         return {'ERROR': 'No matching university found'}
-    else:
+    elif len(university) > 1:
         return {'ERROR': 'More than one matching university found. Refine your search.'}
 
 def _get_marks_by_address(address):
