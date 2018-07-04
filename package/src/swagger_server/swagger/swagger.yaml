@@ -19,6 +19,11 @@ paths:
       summary: "retrieve all universities"
       description: ""
       operationId: "get_all_universities"
+      parameters:
+      - in: "query"
+        name: "meta_tag"
+        type: "boolean"
+        description: "True if metadata should be returned"
       produces:
       - "application/json"
       responses:
@@ -49,7 +54,7 @@ paths:
         405:
           description: "Invalid input"
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
-  /university/get_degrees/{university_name}:
+  /university/get_degrees:
     get:
       tags:
       - "university"
@@ -58,16 +63,20 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "university_name"
-        in: "path"
+      - in: "query"
+        name: "university_name"
         description: "name of the university"
         required: true
         type: "string"
+      - in: "query"
+        name: "meta_tag"
+        type: "boolean"
+        description: "True if metadata should be returned"
       responses:
         200:
           description: OK
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
-  /university/get_courses/{university_name}:
+  /university/get_courses:
     get:
       tags:
       - "university"
@@ -76,11 +85,15 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "university_name"
-        in: "path"
+      - in: "query"
+        name: "university_name"
         description: "name of the university"
         required: true
         type: "string"
+      - in: "query"
+        name: "meta_tag"
+        type: "boolean"
+        description: "True if metadata should be returned"
       responses:
         200:
           description: OK
@@ -92,6 +105,11 @@ paths:
       summary: "retrieve all degrees"
       description: ""
       operationId: "get_all_degrees"
+      parameters:
+      - in: "query"
+        name: "meta_tag"
+        type: "boolean"
+        description: "True if metadata should be returned"
       produces:
       - "application/json"
       responses:
@@ -173,6 +191,11 @@ paths:
       summary: "retrieve all courses"
       description: ""
       operationId: "get_all_courses"
+      parameters:
+      - in: "query"
+        name: "meta_tag"
+        type: "boolean"
+        description: "True if metadata should be returned"
       produces:
       - "application/json"
       responses:
@@ -377,7 +400,7 @@ paths:
         405:
           description: "Invalid input"
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
-  /mark/get_marks/{student_address}:
+  /mark/get_marks:
     get:
       tags:
       - "mark"
@@ -386,8 +409,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "student_address"
-        in: "path"
+      - in: "query"
+        name: "student_address"
         description: "ID of student to return"
         required: true
         type: "string"

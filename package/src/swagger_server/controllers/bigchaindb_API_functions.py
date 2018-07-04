@@ -1,4 +1,4 @@
-from .creation_functions import _create
+from .creation_functions import _create, _component_weighting_equal_one
 from .getter_functions import (_get_all_assets, _get_marks_by_address,
                                _get_assets_by_university)
 from .global_vars import ADMIN
@@ -14,6 +14,8 @@ def create_degree(body):
     return _create(body.get('asset'), body.get('metadata'), ADMIN)
 
 def create_course(body):
+    if not _component_weighting_equal_one(body.get('metadata')):
+        return {'ERROR': 'Course component weights do not sum up to one.'}
     return _create(body.get('asset'), body.get('metadata'), ADMIN)
 
 def create_mark(body):
@@ -25,17 +27,17 @@ def degree_append_courses(body):
 def degree_delete_course(body):
     _degree_delete_course(body.get('degree_id'), body.get('course_id'), ADMIN)
 
-def get_all_courses():
-    return _get_all_assets('course')
+def get_all_courses(meta_flag):
+    return _get_all_assets('course', meta_flag)
 
-def get_all_degrees():
-    return _get_all_assets('degree')
+def get_all_degrees(meta_flag):
+    return _get_all_assets('degree', meta_flag)
 
 def get_marks_by_address(student_address):
     return _get_marks_by_address(student_address)
 
-def get_all_universities():
-    return _get_all_assets('university')
+def get_all_universities(meta_flag):
+    return _get_all_assets('university', meta_flag)
 
 def course_update_passing(body):
     return _update_metadata_component('passing', body.get('course_id'), body.get('passing'), ADMIN)
@@ -61,8 +63,8 @@ def course_delete_corequisite(body):
 def mark_update(body):
     return _update_metadata_component('mark', body.get('mark_id'), body.get('mark'), ADMIN)
 
-def university_get_degrees(university_name):
-    return _get_assets_by_university(university_name, 'degree')
+def university_get_degrees(university_name, meta_flag):
+    return _get_assets_by_university(university_name, meta_flag, 'degree')
 
-def university_get_courses(university_name):
-    return _get_assets_by_university(university_name, 'course')
+def university_get_courses(university_name, meta_flag):
+    return _get_assets_by_university(university_name, meta_flag, 'course')
