@@ -21,7 +21,7 @@ paths:
       operationId: "get_all_universities"
       parameters:
       - in: "query"
-        name: "meta_tag"
+        name: "meta_flag"
         type: "boolean"
         description: "True if metadata should be returned"
       produces:
@@ -69,7 +69,7 @@ paths:
         required: true
         type: "string"
       - in: "query"
-        name: "meta_tag"
+        name: "meta_flag"
         type: "boolean"
         description: "True if metadata should be returned"
       responses:
@@ -91,7 +91,7 @@ paths:
         required: true
         type: "string"
       - in: "query"
-        name: "meta_tag"
+        name: "meta_flag"
         type: "boolean"
         description: "True if metadata should be returned"
       responses:
@@ -107,7 +107,7 @@ paths:
       operationId: "get_all_degrees"
       parameters:
       - in: "query"
-        name: "meta_tag"
+        name: "meta_flag"
         type: "boolean"
         description: "True if metadata should be returned"
       produces:
@@ -193,7 +193,7 @@ paths:
       operationId: "get_all_courses"
       parameters:
       - in: "query"
-        name: "meta_tag"
+        name: "meta_flag"
         type: "boolean"
         description: "True if metadata should be returned"
       produces:
