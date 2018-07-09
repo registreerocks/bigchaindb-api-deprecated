@@ -10,3 +10,7 @@
     Wait for about a minute until all is configured correctly.
 
 You can explore the API by visiting http://localhost:8080/v0.1/ui/.
+
+To rebuild the image, call
+
+    $ docker-compose build
