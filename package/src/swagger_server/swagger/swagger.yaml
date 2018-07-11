@@ -461,13 +461,6 @@ definitions:
                 type: "string"
               postal_address:
                 type: "string"
-      metadata:
-        type: "object"
-        properties:
-          courses:
-            type: "array"
-            items: 
-              type: "string"
     xml:
       name: "University"
   Degree:
