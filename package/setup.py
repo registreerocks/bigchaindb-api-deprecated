@@ -11,5 +11,5 @@ setup(
    packages=find_packages('src'),
    package_data={'swagger_server': ['swagger/swagger.yaml']},
 
-   install_requires=['Flask==1.0.2', 'connexion >= 1.1.9', 'bigchaindb-driver==0.5.0', 'pytest', 'mock'],
+   install_requires=['Flask==1.0.2', 'flask_cors', 'connexion >= 1.1.9', 'bigchaindb-driver==0.5.0', 'pytest', 'mock'],
 )
