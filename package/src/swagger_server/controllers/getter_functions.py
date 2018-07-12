@@ -14,19 +14,20 @@ def _get_all_assets(asset_type, meta_flag):
     return assets 
 
 def _get_assets_by_university(university_name, meta_flag, asset_type):
-    university = BDB.assets.get(search=university_name)
-    if len(university) == 1:
-        university_id = university[0].get('id')
+    universities = _get_all_assets('university', False)
+    matches = [uni.get('id') for uni in universities if university_name in uni.get('data').get('name') or university_name in uni.get('data').get('short')]
+    if len(matches) == 1:
+        university_id = matches[0]
         all_files = _get_all_assets(asset_type, meta_flag)
         university_files = []
         for f in all_files:
             if f.get('data').get('university_id') == university_id:
                 university_files.append(f)
         return university_files
-    elif len(university) < 1:
-        return {'ERROR': 'No matching university found'}
-    elif len(university) > 1:
-        return {'ERROR': 'More than one matching university found. Refine your search.'}
+    elif len(matches) < 1:
+        return {'ERROR': 'No matching university found'}, 409
+    elif len(matches) > 1:
+        return {'ERROR': 'More than one matching university found. Refine your search.'}, 409
 
 def _get_marks_by_address(address):
     course_marks = []
