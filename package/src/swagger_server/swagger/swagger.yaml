@@ -29,8 +29,6 @@ paths:
       responses:
         200:
           description: OK
-        405:
-          description: "Could not reach BigchainDB"
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
   /university/create:
     post:
@@ -51,8 +49,6 @@ paths:
       responses:
         200:
           description: OK
-        405:
-          description: "Invalid input"
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
   /university/get_degrees:
     get:
@@ -75,6 +71,8 @@ paths:
       responses:
         200:
           description: OK
+        409: 
+          description: Conflict
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
   /university/get_courses:
     get:
@@ -97,6 +95,8 @@ paths:
       responses:
         200:
           description: OK
+        409: 
+          description: Conflict
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
   /degree/get_all:
     get:
@@ -115,8 +115,6 @@ paths:
       responses:
         200:
           description: OK
-        405:
-          description: "Could not reach BigchainDB"
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
   /degree/create:
     post:
@@ -137,8 +135,6 @@ paths:
       responses:
         200:
           description: OK
-        405:
-          description: "Invalid input"
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
   /degree/append_courses:
     post:
@@ -159,8 +155,6 @@ paths:
       responses:
         200:
           description: OK
-        405:
-          description: "Invalid input"
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
   /degree/delete_course:
     post:
@@ -181,8 +175,6 @@ paths:
       responses:
         200:
           description: OK
-        405:
-          description: "Invalid input"
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
   /course/get_all:
     get:
@@ -221,8 +213,6 @@ paths:
       responses:
         200:
           description: OK
-        405:
-          description: "Invalid input"
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
   /course/update_passing:
     post:
@@ -243,8 +233,6 @@ paths:
       responses:
         200:
           description: OK
-        405:
-          description: "Invalid input"
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
   /course/update_distinction:
     post:
@@ -265,8 +253,6 @@ paths:
       responses:
         200:
           description: OK
-        405:
-          description: "Invalid input"
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
   /course/update_components:
     post:
@@ -287,8 +273,6 @@ paths:
       responses:
         200:
           description: OK
-        405:
-          description: "Invalid input"
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
   /course/add_prerequisite:
     post:
@@ -309,8 +293,6 @@ paths:
       responses:
         200:
           description: OK
-        405:
-          description: "Invalid input"
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
   /course/delete_prerequisite:
     post:
@@ -331,8 +313,6 @@ paths:
       responses:
         200:
           description: OK
-        405:
-          description: "Invalid input"
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
   /course/add_corequisite:
     post:
@@ -353,8 +333,6 @@ paths:
       responses:
         200:
           description: OK
-        405:
-          description: "Invalid input"
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
   /course/delete_corequisite:
     post:
@@ -375,8 +353,6 @@ paths:
       responses:
         200:
           description: OK
-        405:
-          description: "Invalid input"
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
   /mark/create:
     post:
@@ -397,8 +373,6 @@ paths:
       responses:
         200:
           description: OK
-        405:
-          description: "Invalid input"
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
   /mark/get_marks:
     get:
@@ -437,8 +411,6 @@ paths:
       responses:
         200:
           description: OK
-        405:
-          description: "Invalid input"
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
 definitions:
   University:
