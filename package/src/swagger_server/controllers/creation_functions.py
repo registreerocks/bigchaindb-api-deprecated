@@ -1,4 +1,5 @@
-from .general_functions import _fulfill_transaction, _send_transaction
+from .general_functions import (_add_timestamp, _fulfill_transaction,
+                                _send_transaction)
 from .global_vars import BDB
 
 def _create(asset, metadata, user):
@@ -22,7 +23,7 @@ def _prepare_create_transaction(asset, metadata, key):
     prepared_creation_tx = BDB.transactions.prepare(
         operation='CREATE',
         signers=key,
-        asset=asset,
-        metadata=metadata,
+        asset=_add_timestamp(asset),
+        metadata=_add_timestamp(metadata),
     )
     return prepared_creation_tx

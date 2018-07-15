@@ -1,5 +1,7 @@
-from .general_functions import _fulfill_transaction, _send_transaction
+from .general_functions import (_add_timestamp, _fulfill_transaction,
+                                _send_transaction)
 from .global_vars import BDB
+
 
 def _degree_append_courses(asset_id, courses, admin):
     tx, tx_id = _get_last_transaction(asset_id)
@@ -61,7 +63,7 @@ def _prepare_update_transaction(asset_id, tx_input, admin, metadata):
         inputs=tx_input,
         asset={'id': asset_id},
         recipients=admin.public_key,
-        metadata = metadata
+        metadata = _add_timestamp(metadata)
     )
     return tx_transfer
 
