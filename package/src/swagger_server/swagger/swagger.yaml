@@ -213,6 +213,8 @@ paths:
       responses:
         200:
           description: OK
+        409: 
+          description: Conflict
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
   /course/update_passing:
     post:
