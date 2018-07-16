@@ -15,7 +15,7 @@ def create_degree(body):
 
 def create_course(body):
     if not _component_weighting_equal_one(body.get('metadata')):
-        return {'ERROR': 'Course component weights do not sum up to one.'}
+        return {'ERROR': 'Course component weights do not sum up to one.'}, 409
     return _create(body.get('asset'), body.get('metadata'), ADMIN)
 
 def create_mark(body):
