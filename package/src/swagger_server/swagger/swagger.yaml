@@ -398,7 +398,7 @@ paths:
         200:
           description: OK
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
-  /mark/get_marks:
+  /mark/get_by_student:
     get:
       tags:
       - "mark"
