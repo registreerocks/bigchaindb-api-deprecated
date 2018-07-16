@@ -63,8 +63,8 @@ def course_delete_corequisite(body):
 def mark_update(body):
     return _update_metadata_component('mark', body.get('mark_id'), body.get('mark'), ADMIN)
 
-def university_get_degrees(university_name, meta_flag):
-    return _get_assets_by_university(university_name, meta_flag, 'degree')
+def university_get_degrees(id, meta_flag):
+    return _get_assets_by_university(id, meta_flag, 'degree')
 
-def university_get_courses(university_name, meta_flag):
-    return _get_assets_by_university(university_name, meta_flag, 'course')
+def university_get_courses(id, meta_flag):
+    return _get_assets_by_university(id, meta_flag, 'course')
