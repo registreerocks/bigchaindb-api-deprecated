@@ -10,5 +10,5 @@ def _send_transaction(transaction):
     return BDB.transactions.send_commit(transaction)
 
 def _add_timestamp(dictionary):
-    dictionary['timestamp'] = datetime.datetime.utcnow()
+    dictionary['timestamp'] = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M')
     return dictionary
