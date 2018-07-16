@@ -30,6 +30,28 @@ paths:
         200:
           description: OK
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+  /university/get_by_id:
+    get:
+      tags:
+      - "university"
+      summary: "retrieve a university by its id"
+      description: ""
+      operationId: "university_get_by_id"
+      parameters:
+      - in: "query"
+        name: "id"
+        type: "string"
+        description: "University id"
+      - in: "query"
+        name: "meta_flag"
+        type: "boolean"
+        description: "True if metadata should be returned"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: OK
+      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
   /university/create:
     post:
       tags:
@@ -116,6 +138,28 @@ paths:
         200:
           description: OK
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+  /degree/get_by_id:
+    get:
+      tags:
+      - "degree"
+      summary: "retrieve a degree by its id"
+      description: ""
+      operationId: "degree_get_by_id"
+      parameters:
+      - in: "query"
+        name: "id"
+        type: "string"
+        description: "Degree id"
+      - in: "query"
+        name: "meta_flag"
+        type: "boolean"
+        description: "True if metadata should be returned"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: OK
+      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
   /degree/create:
     post:
       tags:
@@ -184,6 +228,28 @@ paths:
       description: ""
       operationId: "get_all_courses"
       parameters:
+      - in: "query"
+        name: "meta_flag"
+        type: "boolean"
+        description: "True if metadata should be returned"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: OK
+      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+  /course/get_by_id:
+    get:
+      tags:
+      - "course"
+      summary: "retrieve a course by its id"
+      description: ""
+      operationId: "course_get_by_id"
+      parameters:
+      - in: "query"
+        name: "id"
+        type: "string"
+        description: "Course id"
       - in: "query"
         name: "meta_flag"
         type: "boolean"
