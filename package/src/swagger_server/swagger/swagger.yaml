@@ -60,8 +60,8 @@ paths:
       - "application/json"
       parameters:
       - in: "query"
-        name: "university_name"
-        description: "name of the university"
+        name: "id"
+        description: "Id of the university"
         required: true
         type: "string"
       - in: "query"
@@ -84,8 +84,8 @@ paths:
       - "application/json"
       parameters:
       - in: "query"
-        name: "university_name"
-        description: "name of the university"
+        name: "id"
+        description: "Id of the university"
         required: true
         type: "string"
       - in: "query"
@@ -430,8 +430,6 @@ definitions:
               short:
                 type: "string"
               physical_address:
-                type: "string"
-              postal_address:
                 type: "string"
     xml:
       name: "University"
