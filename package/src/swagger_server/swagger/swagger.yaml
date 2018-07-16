@@ -494,6 +494,8 @@ definitions:
                   format: "float"
                   minimum: 0
                   maximum: 1
+                semester:
+                  type: "integer"
     xml:
       name: "Degree"
   Course:
@@ -562,6 +564,8 @@ definitions:
                 type: "string"
                 default: "mark"
               student_address:
+                type: "string"
+              degree_id:
                 type: "string"
               course_id:
                 type: "string"
