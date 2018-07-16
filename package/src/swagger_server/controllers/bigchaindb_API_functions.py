@@ -8,7 +8,7 @@ from .update_functions import (_course_add_requisite, _course_delete_requisite,
 
 
 def create_university(body):
-    return _create(body.get('asset'), None, ADMIN)
+    return _create(body.get('asset'), {}, ADMIN)
 
 def create_degree(body):
     return _create(body.get('asset'), body.get('metadata'), ADMIN)
