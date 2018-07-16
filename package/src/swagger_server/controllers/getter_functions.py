@@ -41,12 +41,12 @@ def _get_marks_by_address(address):
     return course_marks
 
 def _get_asset_by_key(asset, key, value, meta_flag):
-    courses = _get_all_assets(asset, True)
+    assets = _get_all_assets(asset, True)
     matches = []
-    for course in courses:
-        if (course['data'].get(key) == value) or (course['metadata'].get(key) == value):
+    for asset in assets:
+        if (asset['data'].get(key) == value) or (asset['metadata'].get(key) == value):
             if meta_flag:
-                matches.append(course)
+                matches.append(asset)
             else:
-                matches.append({'data': course.get('data')})
+                matches.append({'data': asset.get('data')})
     return matches
