@@ -39,3 +39,14 @@ def _get_marks_by_address(address):
         mark = mark_transaction[-1].get('metadata').get('mark')
         course_marks.append((course, mark_type, mark, mark_weighting))
     return course_marks
+
+def _get_asset_by_key(asset, key, value, meta_flag):
+    courses = _get_all_assets(asset, True)
+    matches = []
+    for course in courses:
+        if (course['data'].get(key) == value) or (course['metadata'].get(key) == value):
+            if meta_flag:
+                matches.append(course)
+            else:
+                matches.append({'data': course.get('data')})
+    return matches

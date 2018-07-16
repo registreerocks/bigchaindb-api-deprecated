@@ -194,6 +194,28 @@ paths:
         200:
           description: OK
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+  /course/get_by_lecturer:
+    get:
+      tags:
+      - "course"
+      summary: "retrieve all courses taught by one particular lecturer"
+      description: ""
+      operationId: "course_get_by_lecturer"
+      parameters:
+      - in: "query"
+        name: "lecturer"
+        type: "string"
+        description: "Lecturer's name"
+      - in: "query"
+        name: "meta_flag"
+        type: "boolean"
+        description: "True if metadata should be returned"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: OK
+      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
   /course/create:
     post:
       tags:
@@ -491,6 +513,8 @@ definitions:
               description:
                 type: "string"
               id:
+                type: "string"
+              lecturer:
                 type: "string"
               university_id:
                 type: "string"
