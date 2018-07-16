@@ -1,6 +1,7 @@
-from .creation_functions import _create, _component_weighting_equal_one
-from .getter_functions import (_get_all_assets, _get_marks_by_address,
-                               _get_assets_by_university, _get_asset_by_key)
+from .creation_functions import _component_weighting_equal_one, _create
+from .getter_functions import (_get_all_assets, _get_assets_by_key,
+                               _get_assets_by_university,
+                               _get_marks_by_address)
 from .global_vars import ADMIN
 from .update_functions import (_course_add_requisite, _course_delete_requisite,
                                _degree_append_courses, _degree_delete_course,
@@ -70,4 +71,4 @@ def university_get_courses(id, meta_flag):
     return _get_assets_by_university(id, meta_flag, 'course')
 
 def course_get_by_lecturer(lecturer, meta_flag):
-    return _get_asset_by_key('course', 'lecturer', lecturer, meta_flag)
+    return _get_assets_by_key('course', 'lecturer', lecturer, meta_flag)

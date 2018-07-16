@@ -40,7 +40,7 @@ def _get_marks_by_address(address):
         course_marks.append((course, mark_type, mark, mark_weighting))
     return course_marks
 
-def _get_asset_by_key(asset, key, value, meta_flag):
+def _get_assets_by_key(asset, key, value, meta_flag):
     assets = _get_all_assets(asset, True)
     matches = []
     for asset in assets:
@@ -48,5 +48,12 @@ def _get_asset_by_key(asset, key, value, meta_flag):
             if meta_flag:
                 matches.append(asset)
             else:
-                matches.append({'data': asset.get('data')})
+                matches.append({'data': asset.get('data'), 'id': asset.get('id')})
     return matches
+
+def _get_asset_by_id(asset_id, meta_flag):
+    asset = BDB.transactions.get(asset_id=asset_id)
+    if not meta_flag:
+        return {'data': asset[0].get('asset').get('data'), 'id': asset[0].get('id')}
+    else:
+        return {'data': asset[0].get('asset').get('data'), 'id': asset[0].get('id'), 'metadata': asset[-1].get('metadata')}
