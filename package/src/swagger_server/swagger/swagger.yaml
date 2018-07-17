@@ -561,7 +561,9 @@ definitions:
                   minimum: 0
                   maximum: 1
                 semester:
-                  type: "integer"
+                  type: "array"
+                  items: 
+                    type: "integer"
     xml:
       name: "Degree"
   Course:
