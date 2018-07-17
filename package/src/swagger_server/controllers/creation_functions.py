@@ -3,6 +3,7 @@ from .general_functions import (_add_timestamp, _fulfill_transaction,
 from .global_vars import BDB
 
 def _create(asset, metadata, user):
+    metadata = _timestamp_metadata(metadata)
     transaction = _prepare_create_transaction(asset, metadata, user.public_key)
     signed_transaction = _fulfill_transaction(transaction, user.private_key)
     receipt = _send_transaction(signed_transaction)
@@ -23,7 +24,13 @@ def _prepare_create_transaction(asset, metadata, key):
     prepared_creation_tx = BDB.transactions.prepare(
         operation='CREATE',
         signers=key,
-        asset=_add_timestamp(asset),
-        metadata=_add_timestamp(metadata),
+        asset=asset,
+        metadata=metadata,
     )
     return prepared_creation_tx
+
+def _timestamp_metadata(metadata):
+    if not metadata.get('timestamp'):
+        return _add_timestamp(metadata)
+    else:
+        return metadata

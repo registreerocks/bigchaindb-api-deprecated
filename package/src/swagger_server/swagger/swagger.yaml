@@ -521,6 +521,12 @@ definitions:
                 type: "string"
               physical_address:
                 type: "string"
+      metadata:
+        type: "object"
+        properties: 
+          timestamp:
+            type: "string"
+            format: "date"
     xml:
       name: "University"
   Degree:
@@ -564,6 +570,9 @@ definitions:
                   type: "array"
                   items: 
                     type: "integer"
+          timestamp:
+            type: "string"
+            format: "date"
     xml:
       name: "Degree"
   Course:
@@ -617,6 +626,9 @@ definitions:
             type: "array"
             items:
               type: "string"
+          timestamp:
+            type: "string"
+            format: "date"
     xml:
       name: "Course"
   Mark:
@@ -646,6 +658,9 @@ definitions:
             type: "integer"
             minimum: 0
             maximum: 100
+          timestamp:
+            type: "string"
+            format: "date"
     xml:
       name: "Mark"
   DegreeAppendCourses:
