@@ -81,3 +81,6 @@ def degree_get_by_id(id, meta_flag):
 
 def course_get_by_id(id, meta_flag):
     return _get_asset_by_id(id, meta_flag)
+
+def get_marks_by_course_id(id):
+    return _get_assets_by_key('mark', 'course_id', id, True)
