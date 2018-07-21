@@ -160,6 +160,28 @@ paths:
         200:
           description: OK
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+  /degree/get_courses:
+    get:
+      tags:
+      - "degree"
+      summary: "retrieve all courses and their information belonging to a degree"
+      description: ""
+      operationId: "degree_get_courses"
+      parameters:
+      - in: "query"
+        name: "id"
+        type: "string"
+        description: "Degree id"
+      - in: "query"
+        name: "meta_flag"
+        type: "boolean"
+        description: "True if course metadata should be returned"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: OK
+      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
   /degree/create:
     post:
       tags:
@@ -698,6 +720,11 @@ definitions:
               format: "float"
               minimum: 0
               maximum: 1
+            semester:
+              type: "array"
+              items: 
+                type: "integer"
+
     xml:
       name: "DegreeAppendCourses"
   DegreeDeleteCourse:
