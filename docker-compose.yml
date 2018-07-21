@@ -18,7 +18,7 @@ services:
     depends_on:
       - mongodb
       - tendermint
-    image: bigchaindb/bigchaindb
+    image: bigchaindb/bigchaindb:2.0.0-alpha6
     environment:
       BIGCHAINDB_DATABASE_BACKEND: localmongodb
       BIGCHAINDB_DATABASE_HOST: mongodb
