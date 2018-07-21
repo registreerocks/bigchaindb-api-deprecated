@@ -22,15 +22,17 @@ def _get_assets_by_university(university_id, meta_flag, asset_type):
     return university_files
 
 def _get_assets_by_key(asset, key, value, meta_flag):
-    assets = _get_all_assets(asset, True)
-    matches = []
-    for asset in assets:
-        if (asset['data'].get(key) == value) or (asset['metadata'].get(key) == value):
+    files = BDB.assets.get(search=value)
+    assets = []
+    for f in files:
+        if (f.get('data').get('asset_type') == asset) and (f.get('data').get(key) == value):
             if meta_flag:
-                matches.append(asset)
-            else:
-                matches.append({'data': asset.get('data'), 'id': asset.get('id')})
-    return matches
+                asset_id = f.get('id')
+                metadata = BDB.transactions.get(asset_id=asset_id)[-1].get('metadata')
+                assets.append({**f, **{'metadata': metadata}})
+            else: 
+                assets.append(f)
+    return assets
 
 def _get_asset_by_id(asset_id, meta_flag):
     asset = BDB.transactions.get(asset_id=asset_id)
