@@ -5,8 +5,7 @@ from bigchaindb_driver import BigchainDB
 from src.swagger_server.controllers.getter_functions import (_get_all_assets,
                                                              _get_asset_by_id,
                                                              _get_assets_by_key,
-                                                             _get_assets_by_university,
-                                                             _get_marks_by_address)
+                                                             _get_assets_by_university)
 
 
 @mock.patch('bigchaindb_driver.BigchainDB.transactions')
@@ -17,13 +16,6 @@ def test_get_all_assets(mock_assets, mock_transactions):
     asset_type = "course"
     assert(_get_all_assets(asset_type, False) == get_course_assets())
     assert(_get_all_assets(asset_type, True) == get_course_search_result())
-
-@mock.patch('bigchaindb_driver.BigchainDB.assets')
-@mock.patch('bigchaindb_driver.BigchainDB.transactions')
-def test_get_marks_by_address(mock_transactions, mock_assets):
-    mock_assets.get.return_value = get_mark_assets()
-    mock_transactions.get.return_value = get_mark_transaction()
-    assert(_get_marks_by_address('0x03') == get_mark_search_result())
 
 @mock.patch('bigchaindb_driver.BigchainDB.transactions')
 @mock.patch('bigchaindb_driver.BigchainDB.assets')

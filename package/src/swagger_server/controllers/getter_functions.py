@@ -21,14 +21,6 @@ def _get_assets_by_university(university_id, meta_flag, asset_type):
             university_files.append(f)
     return university_files
 
-def _get_marks_by_address(address):
-    all_marks = _get_all_assets('mark', True)
-    student_marks = []
-    for mark in all_marks:
-        if mark.get('data').get('student_address') == address:
-            student_marks.append(mark)
-    return student_marks
-
 def _get_assets_by_key(asset, key, value, meta_flag):
     assets = _get_all_assets(asset, True)
     matches = []
