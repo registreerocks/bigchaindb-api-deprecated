@@ -46,3 +46,13 @@ def _get_asset_by_id(asset_id, meta_flag):
         return {'data': asset[0].get('asset').get('data'), 'id': asset[0].get('id')}
     else:
         return {'data': asset[0].get('asset').get('data'), 'id': asset[0].get('id'), 'metadata': asset[-1].get('metadata')}
+
+def _get_courses_by_degree(_id, meta_flag):
+    degree = _get_asset_by_id(_id, True)
+    courses = degree.get('metadata').get('courses')
+    collection = []
+    for course in courses:
+        course_id = course.get('course_address')
+        course_data = _get_asset_by_id(course_id, meta_flag)
+        collection.append({**course_data, **{'degree_info': course}})
+    return collection
