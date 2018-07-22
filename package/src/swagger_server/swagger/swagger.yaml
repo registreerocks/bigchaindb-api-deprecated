@@ -599,7 +599,7 @@ definitions:
             items: 
               type: "object"
               properties:
-                course_address:
+                course_id:
                   type: "string"
                 weighting:
                   type: "number"
@@ -724,7 +724,6 @@ definitions:
               type: "array"
               items: 
                 type: "integer"
-
     xml:
       name: "DegreeAppendCourses"
   DegreeDeleteCourse:

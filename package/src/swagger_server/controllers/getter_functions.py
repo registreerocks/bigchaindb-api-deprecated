@@ -46,7 +46,7 @@ def _get_courses_by_degree(_id, meta_flag):
     courses = degree.get('metadata').get('courses')
     collection = []
     for course in courses:
-        course_id = course.get('course_address')
+        course_id = course.get('course_id')
         course_data = _get_asset_by_id(course_id, meta_flag)
         collection.append({**course_data, **{'degree_info': course}})
     return collection
