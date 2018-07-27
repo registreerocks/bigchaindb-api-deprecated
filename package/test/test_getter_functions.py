@@ -5,7 +5,10 @@ from bigchaindb_driver import BigchainDB
 from src.swagger_server.controllers.getter_functions import (_get_all_assets,
                                                              _get_asset_by_id,
                                                              _get_assets_by_key,
-                                                             _get_assets_by_university)
+                                                             _get_assets_by_university,
+                                                             _retrieve_course_ids,
+                                                             _retrieve_course_information,
+                                                             _retrieve_mark_data)
 
 
 @mock.patch('bigchaindb_driver.BigchainDB.transactions')
@@ -44,6 +47,48 @@ def test_get_asset_by_id(mock_transactions):
     asset_id = "6f4a3c43ec664373720ce1f8158b2779cfa0aec85954791a8ca766a1e53ef8bb"
     assert(_get_asset_by_id(asset_id, False) == get_course_assets()[0])
     assert(_get_asset_by_id(asset_id, True) == get_course_search_result()[0])
+
+def test_retrieve_course_ids():
+    files = get_mark_assets()
+    student_address = '0x03'
+    assert (_retrieve_course_ids(files, student_address) == (files, ['6f4a3c43ec664373720ce1f8158b2779cfa0aec85954791a8ca766a1e53ef8bb']))
+    student_address = '0x04'
+    assert (_retrieve_course_ids(files, student_address) == ([], []))
+
+@mock.patch('bigchaindb_driver.BigchainDB.transactions')
+def test_retrieve_course_information(mock_transactions):
+    mock_transactions.get.return_value = get_course_transaction()
+    expected_output = {'0x00': {'name': 'Econometrics', 
+                                'components': [{
+                                    'type': 'midterm', 
+                                    'weighting': 0.25, 
+                                    'required': True},
+                                    {'type': 'final_exam', 
+                                    'weighting': 0.75, 
+                                    'required': True}]
+                                }
+    }
+    assert(_retrieve_course_information(['0x00']) == expected_output)
+
+@mock.patch('bigchaindb_driver.BigchainDB.transactions')
+def test_retrieve_mark_data(mock_transactions):
+    mock_transactions.get.return_value = get_mark_transaction()
+    files = get_mark_assets()
+    course_data = {'6f4a3c43ec664373720ce1f8158b2779cfa0aec85954791a8ca766a1e53ef8bb': {
+        'name': 'Econometrics', 
+        'components': [{
+            'type': 'midterm', 
+            'weighting': 0.25, 
+            'required': True},
+            {'type': 'final_exam', 
+            'weighting': 0.75, 
+            'required': True}]
+        }
+    }
+    expected_output = {'6f4a3c43ec664373720ce1f8158b2779cfa0aec85954791a8ca766a1e53ef8bb': {
+        'name': 'Econometrics', 
+        'components': {'midterm': {'mark': 85, 'weighting': 0.25}}}}
+    assert(_retrieve_mark_data(files, course_data) == expected_output)
 
 def get_mark_assets():
     return [{
