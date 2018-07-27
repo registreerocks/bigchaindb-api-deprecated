@@ -540,6 +540,24 @@ paths:
         200:
           description: OK
       x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+  /mark/get_by_lecturer:
+    get:
+      tags:
+      - "mark"
+      summary: "returns all marks for a lecturer, grouped by courses and students"
+      operationId: "get_course_marks_by_lecturer"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "lecturer"
+        description: "name of the lecturer"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: OK
+      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
   /mark/update:
     post:
       tags:
