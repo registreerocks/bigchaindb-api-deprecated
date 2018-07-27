@@ -491,13 +491,31 @@ paths:
       tags:
       - "mark"
       summary: "returns all marks for a particular student"
-      operationId: "get_marks_by_address"
+      operationId: "get_marks_by_student"
       produces:
       - "application/json"
       parameters:
       - in: "query"
         name: "student_address"
-        description: "ID of student to return"
+        description: "Smart contract address of student to return"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: OK
+      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+  /mark/get_by_student_new:
+    get:
+      tags:
+      - "mark"
+      summary: "returns all marks for a particular student"
+      operationId: "get_marks_by_student_new"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "student_address"
+        description: "Smart contract address of student to return"
         required: true
         type: "string"
       responses:
