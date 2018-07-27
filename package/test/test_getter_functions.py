@@ -6,6 +6,7 @@ from src.swagger_server.controllers.getter_functions import (_get_all_assets,
                                                              _get_asset_by_id,
                                                              _get_assets_by_key,
                                                              _get_assets_by_university,
+                                                             _get_course_marks_by_lecturer,
                                                              _retrieve_course_ids,
                                                              _retrieve_course_information,
                                                              _retrieve_mark_data)
@@ -90,6 +91,28 @@ def test_retrieve_mark_data(mock_transactions):
         'components': {'midterm': {'mark': 85, 'weighting': 0.25}}}}
     assert(_retrieve_mark_data(files, course_data) == expected_output)
 
+@mock.patch('bigchaindb_driver.BigchainDB.transactions')
+@mock.patch('bigchaindb_driver.BigchainDB.assets')
+def test_get_course_marks_by_lecturer(mock_assets, mock_transactions):
+    mock_assets.get.side_effect = [get_course_assets(), get_mark_assets()]
+    mock_transactions.get.side_effect = [get_course_search_result(), get_mark_search_result()]
+    expected_output = {'student_addresses': ['0x03'], 
+    'marks_per_course':
+        {'6f4a3c43ec664373720ce1f8158b2779cfa0aec85954791a8ca766a1e53ef8bb': {
+            'name': 'Econometrics',
+            'components': [{
+                'type': 'midterm', 
+                'weighting': 0.25, 
+                'required': True},
+                {'type': 'final_exam', 
+                'weighting': 0.75, 
+                'required': True}], 
+            'course_marks': {
+                '0x03': {
+                    'midterm': 85
+            }}}}}
+    assert(_get_course_marks_by_lecturer('Smith')==expected_output)
+
 def get_mark_assets():
     return [{
         'data': {
@@ -137,7 +160,8 @@ def get_course_assets():
                 'name': 'Econometrics',
                 'description': 'This course is an introductory course in Econometrics',
                 'id': 'Econ104',
-                'university_id': "ece3537ac407a502e0586fbb8ad76771479cfd0689a38013b91ee77d97452023"},
+                'university_id': "ece3537ac407a502e0586fbb8ad76771479cfd0689a38013b91ee77d97452023",
+                'lecturer': 'Smith'},
             'id': '6f4a3c43ec664373720ce1f8158b2779cfa0aec85954791a8ca766a1e53ef8bb'
             }]
 
@@ -162,7 +186,8 @@ def get_course_transaction():
                     'name': 'Econometrics',
                     'description': 'This course is an introductory course in Econometrics',
                     'id': 'Econ104',
-                    'university_id': "ece3537ac407a502e0586fbb8ad76771479cfd0689a38013b91ee77d97452023"}},
+                    'university_id': "ece3537ac407a502e0586fbb8ad76771479cfd0689a38013b91ee77d97452023",
+                    'lecturer': 'Smith'}},
             'id': '6f4a3c43ec664373720ce1f8158b2779cfa0aec85954791a8ca766a1e53ef8bb'}]
 
 def get_course_search_result():
@@ -185,5 +210,6 @@ def get_course_search_result():
                     'name': 'Econometrics',
                     'description': 'This course is an introductory course in Econometrics',
                     'id': 'Econ104',
-                    'university_id': "ece3537ac407a502e0586fbb8ad76771479cfd0689a38013b91ee77d97452023"},
+                    'university_id': "ece3537ac407a502e0586fbb8ad76771479cfd0689a38013b91ee77d97452023",
+                    'lecturer': 'Smith'},
                 'id': '6f4a3c43ec664373720ce1f8158b2779cfa0aec85954791a8ca766a1e53ef8bb'}]

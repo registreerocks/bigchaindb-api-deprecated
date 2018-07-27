@@ -91,3 +91,23 @@ def _get_courses_by_degree(_id, meta_flag):
         course = _get_asset_by_id(course_id, meta_flag)
         collection.append({**course, **{'degree_info': course}})
     return collection
+
+def _get_course_marks_by_lecturer(lecturer):
+    courses = _get_assets_by_key('course', 'lecturer', lecturer, True)
+    course_ids = [item.get('id') for item in courses]
+    marks_per_course = dict()
+    student_addresses = set()
+    for i, course_id in enumerate(course_ids):
+        marks = _get_assets_by_key('mark', 'course_id', course_id, True)
+        course_marks = dict()
+        for mark in marks:
+            student_address = mark.get('data').get('student_address')
+            mark_type = mark.get('data').get('type')
+            grade = mark.get('metadata').get('mark')
+            if not course_marks.get(student_address):
+                course_marks[student_address] = {mark_type: grade}
+            else:
+                course_marks[student_address][mark_type] = grade
+            student_addresses.add(student_address)
+        marks_per_course[course_id] = {'name': courses[i].get('data').get('name'), 'components': courses[i].get('metadata').get('components'), 'course_marks': course_marks}
+    return {'student_addresses': list(student_addresses), 'marks_per_course': marks_per_course}
