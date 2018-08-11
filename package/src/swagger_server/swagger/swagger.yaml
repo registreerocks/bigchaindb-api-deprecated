@@ -519,7 +519,7 @@ paths:
         description: mark id and new mark
         required: true
 servers:
-  - url: 'https://localhost:8080/v0.1'
+  - url: 'http://localhost:8080/v0.1'
 components:
   requestBodies:
     CoursePrerequisite:
