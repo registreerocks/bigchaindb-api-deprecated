@@ -520,6 +520,7 @@ paths:
         required: true
 servers:
   - url: 'http://localhost:8080/v0.1'
+  # - url: 'https://localhost:8080/v0.1'
 components:
   requestBodies:
     CoursePrerequisite:
