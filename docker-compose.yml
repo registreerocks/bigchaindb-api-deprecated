@@ -7,6 +7,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
+    environment:
+      AUTH0_DOMAIN: registree.eu.auth0.com
+      API_IDENTIFIER: tbd
+      ALGORITHMS: "['RS256']"
     depends_on:
       - bigchaindb
   mongodb:
