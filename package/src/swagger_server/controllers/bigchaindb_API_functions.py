@@ -1,5 +1,3 @@
-from flask_cors import cross_origin
-
 from .authentication import requires_auth, requires_scope
 from .creation_functions import _component_weighting_equal_one, _create
 from .getter_functions import (_get_all_assets, _get_asset_by_id,
@@ -32,9 +30,8 @@ def degree_append_courses(body):
 def degree_delete_course(body):
     _degree_delete_course(body.get('degree_id'), body.get('course_id'), ADMIN)
 
-@cross_origin(headers=["Content-Type", "Authorization"])
-@cross_origin(headers=["Access-Control-Allow-Origin", "http://localhost:8080"])
 @requires_auth
+@requires_scope('admin')
 def get_all_courses(meta_flag):
     return _get_all_assets('course', meta_flag)
 

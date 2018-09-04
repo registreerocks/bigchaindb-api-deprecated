@@ -32,19 +32,27 @@ def get_token_auth_header():
     return token
 
 
-def requires_scope(required_scope):
+def requires_scope(*required_scopes):
     """Determines if the required scope is present in the access token
     Args:
-        required_scope (str): The scope required to access the resource
+        required_scopes (str): Scopes allowed to access the resource
     """
-    token = get_token_auth_header()
-    unverified_claims = jwt.get_unverified_claims(token)
-    if unverified_claims.get("scope"):
-        token_scopes = unverified_claims["scope"].split()
-        for token_scope in token_scopes:
-            if token_scope == required_scope:
-                return True
-    return False
+
+    def requires_scope_decorator(f):
+
+        def wrapper(*args, **kwargs):
+            token = get_token_auth_header()
+            unverified_claims = jwt.get_unverified_claims(token)
+            if unverified_claims.get("scope"):
+                token_scopes = unverified_claims["scope"].split()
+                for token_scope in token_scopes:
+                    if token_scope in required_scopes:
+                        return f(*args, **kwargs)
+            return json.dumps({"ERROR": "Invalid scope. Method not allowed for scope " + str(token_scope)}), 401
+
+        return wrapper
+
+    return requires_scope_decorator
 
 
 def requires_auth(f):
