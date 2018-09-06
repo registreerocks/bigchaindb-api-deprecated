@@ -17,16 +17,16 @@ def get_token_auth_header():
     """
     auth = request.headers.get("Authorization", None)
     if not auth:
-        return json.dumps({"ERROR": "Authorization header is expected"}), 401
+        return {"ERROR": "Authorization header is expected"}, 401
 
     parts = auth.split()
 
     if parts[0].lower() != "bearer":
-        return json.dumps({"ERROR": "Authorization header must start with Bearer"}), 401
+        return {"ERROR": "Authorization header must start with Bearer"}, 401
     elif len(parts) == 1:
-        return json.dumps({"ERROR": "Token not found"}), 401
+        return {"ERROR": "Token not found"}, 401
     elif len(parts) > 2:
-        return json.dumps({"ERROR": "Authorization header must be Bearer token"}), 401
+        return {"ERROR": "Authorization header must be Bearer token"}, 401
 
     token = parts[1]
     return token
@@ -48,7 +48,7 @@ def requires_scope(*required_scopes):
                 for token_scope in token_scopes:
                     if token_scope in required_scopes:
                         return f(*args, **kwargs)
-            return json.dumps({"ERROR": "Invalid scope. Method not allowed for scope " + str(token_scope)}), 401
+            return {"ERROR": "Invalid scope. Method not allowed for scope " + str(token_scope)}, 401
 
         return wrapper
 
@@ -66,9 +66,9 @@ def requires_auth(f):
         try:
             unverified_header = jwt.get_unverified_header(token)
         except jwt.JWTError:
-            return json.dumps({"ERROR": "Invalid header. Use an RS256 signed JWT Access Token"}), 401
+            return {"ERROR": "Invalid header. Use an RS256 signed JWT Access Token"}, 401
         if unverified_header["alg"] == "HS256":
-            return json.dumps({"ERROR": "Invalid header. Use an RS256 signed JWT Access Token"}), 401
+            return {"ERROR": "Invalid header. Use an RS256 signed JWT Access Token"}, 401
         rsa_key = {}
         for key in jwks["keys"]:
             if key["kid"] == unverified_header["kid"]:
@@ -89,13 +89,13 @@ def requires_auth(f):
                     issuer="https://"+AUTH0_DOMAIN+"/"
                 )
             except jwt.ExpiredSignatureError:
-                return json.dumps({"ERROR": "token is expired"}), 401
+                return {"ERROR": "token is expired"}, 401
             except jwt.JWTClaimsError:
-                return json.dumps({"ERROR": "incorrect claims, please check the audience and issuer"}), 401
+                return {"ERROR": "incorrect claims, please check the audience and issuer"}, 401
             except Exception:
-                return json.dumps({"ERROR": "Unable to parse authentication token."}), 401
+                return {"ERROR": "Unable to parse authentication token."}, 401
 
             _request_ctx_stack.top.current_user = payload
             return f(*args, **kwargs)
-        return json.dumps({"ERROR": "Unable to find appropriate key"}), 401
+        return {"ERROR": "Unable to find appropriate key"}, 401
     return decorated
