@@ -9,7 +9,7 @@ services:
       - "8080:8080"
     environment:
       AUTH0_DOMAIN: "registree.eu.auth0.com"
-      API_IDENTIFIER: "http://startupbattle.com"
+      API_IDENTIFIER: "https://registree.rocks/apis"
       ALGORITHMS: "['RS256']"
     depends_on:
       - bigchaindb
