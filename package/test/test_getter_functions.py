@@ -88,7 +88,7 @@ def test_retrieve_mark_data(mock_transactions):
     }
     expected_output = {'6f4a3c43ec664373720ce1f8158b2779cfa0aec85954791a8ca766a1e53ef8bb': {
         'name': 'Econometrics', 
-        'components': {'midterm': {'mark': 85, 'weighting': 0.25}}}}
+        'components': {'midterm': {'mark': 85, 'weighting': 0.25, 'timestamp': '2018-09-10 16:00'}}}}
     assert(_retrieve_mark_data(files, course_data) == expected_output)
 
 @mock.patch('bigchaindb_driver.BigchainDB.transactions')
@@ -124,7 +124,7 @@ def get_mark_assets():
 
 def get_mark_transaction():
     return [{
-            'metadata': {'mark': 85},
+            'metadata': {'mark': 85, 'timestamp': '2018-09-10 16:00'},
             'asset': {'data': {'mark': {'student_address': '0x03',
             'course_id': '6f4a3c43ec664373720ce1f8158b2779cfa0aec85954791a8ca766a1e53ef8bb',
             'type': 'midterm'}}},
@@ -138,7 +138,7 @@ def get_mark_search_result():
             'course_id': '6f4a3c43ec664373720ce1f8158b2779cfa0aec85954791a8ca766a1e53ef8bb',
             'type': 'midterm'},
         'id': '893e409d441b7f93bbad361053d43d9d9d82e570b5ff39c7fc43d83c96e509b0',
-        'metadata': {'mark': 85}
+        'metadata': {'mark': 85, 'timestamp': '2018-09-10 16:00'}
     }]
 
 def get_university_search_result():

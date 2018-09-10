@@ -51,27 +51,45 @@ def _retrieve_course_ids(files, address):
             courses.append(f.get('data').get('course_id'))
         else:
             files.remove(f)
-    return (files, courses)
+    return (files, list(set(courses)))
 
 def _retrieve_course_information(course_ids):
     course_data = dict()
     for course_id in course_ids:
         course = BDB.transactions.get(asset_id=course_id)
         course_name = course[0].get('asset').get('data').get('name')
-        course_data[course_id] = {'name': course_name, 'components': course[-1].get('metadata').get('components')}
+        course_data[course_id] = {
+            'name': course_name, 
+            'components': course[-1].get('metadata').get('components')
+        }
     return course_data
 
-def _retrieve_mark_data(files, course_data):
+def _retrieve_mark_data(mark_files, course_data):
     mark_data = dict()
-    for f in files:
+    for f in mark_files:
         course_id = f.get('data').get('course_id')
         mark_type = f.get('data').get('type')
-        mark = BDB.transactions.get(asset_id=f.get('id'))[-1].get('metadata').get('mark')
+        mark_file = BDB.transactions.get(asset_id=f.get('id'))[-1]
+        mark = mark_file.get('metadata').get('mark')
+        timestamp = mark_file.get('metadata').get('timestamp')
         weighting = (item for item in course_data.get(course_id).get('components') if item["type"] == mark_type).__next__().get('weighting')
         if mark_data.get(course_id):
-            mark_data.get(course_id).get('components')[mark_type] = {'mark': mark, 'weighting': weighting}
+            mark_data.get(course_id).get('components')[mark_type] = {
+                'mark': mark, 
+                'weighting': weighting, 
+                'timestamp': timestamp
+            }
         else:
-            mark_data[course_id] = {'name': course_data.get(course_id).get('name'), 'components': {mark_type: {'mark': mark, 'weighting': weighting}}}
+            mark_data[course_id] = {
+                'name': course_data.get(course_id).get('name'), 
+                'components': {
+                    mark_type: {
+                        'mark': mark, 
+                        'weighting': weighting, 
+                        'timestamp': timestamp
+                    }
+                }
+            }
     return mark_data
 
 
