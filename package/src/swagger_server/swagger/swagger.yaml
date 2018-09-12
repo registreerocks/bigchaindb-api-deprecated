@@ -656,7 +656,7 @@ components:
                     type: number
                     format: float
                     minimum: 0
-                    maximum: 1
+                    maximum: 100
                   semester:
                     type: array
                     items:
@@ -706,7 +706,7 @@ components:
                     type: number
                     format: float
                     minimum: 0
-                    maximum: 1
+                    maximum: 100
                   required:
                     type: boolean
             prerequisite:
@@ -770,7 +770,7 @@ components:
                 type: number
                 format: float
                 minimum: 0
-                maximum: 1
+                maximum: 100
               semester:
                 type: array
                 items:
@@ -824,7 +824,7 @@ components:
                 type: number
                 format: float
                 minimum: 0
-                maximum: 1
+                maximum: 100
               required:
                 type: boolean
       xml:
