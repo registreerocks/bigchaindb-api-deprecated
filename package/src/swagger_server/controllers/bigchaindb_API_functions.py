@@ -57,8 +57,8 @@ def get_all_degrees(meta_flag):
 def get_marks_by_student(student_address):
     return  _get_assets_by_key('mark', 'student_address', student_address, True)
 
-@requires_auth
-@requires_scope('admin', 'lecturer', 'student', 'registree')
+# @requires_auth
+# @requires_scope('admin', 'lecturer', 'student', 'registree')
 def get_marks_by_student_new(student_address):
     return  _get_marks_by_student(student_address)
 
@@ -132,8 +132,8 @@ def university_get_by_id(id, meta_flag):
 def degree_get_by_id(id, meta_flag):
     return _get_asset_by_id(id, meta_flag)
 
-@requires_auth
-@requires_scope('admin', 'lecturer', 'student', 'registree')
+# @requires_auth
+# @requires_scope('admin', 'lecturer', 'student', 'registree')
 def course_get_by_id(id, meta_flag):
     return _get_asset_by_id(id, meta_flag)
 
