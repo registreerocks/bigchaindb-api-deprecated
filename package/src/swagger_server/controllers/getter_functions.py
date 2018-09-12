@@ -37,7 +37,20 @@ def _get_assets_by_key(asset, key, value, meta_flag):
 def _get_marks_by_student(address):
     files = BDB.assets.get(search=address)
     (files, course_data) = _retrieve_course_data(files, address)
-    return _retrieve_mark_data(files, course_data)    
+    degree_data = _retrieve_degree_data(files)
+    mark_data = _retrieve_mark_data(files, course_data)
+    return {'degree_data': degree_data, 'mark_data': mark_data}
+
+def _retrieve_degree_data(files):
+    if files:
+        degree_id = files[0].get('data').get('degree_id')
+        degree = BDB.transactions.get(asset_id=degree_id)
+        degree_data = {
+            'name': degree[0].get('asset').get('data').get('name'),
+            'level': degree[0].get('asset').get('data').get('level'),
+            'courses': degree[-1].get('metadata').get('courses')
+        }
+        return degree_data
 
 def _retrieve_course_data(files, address):
     (files, course_ids) = _retrieve_course_ids(files, address)
