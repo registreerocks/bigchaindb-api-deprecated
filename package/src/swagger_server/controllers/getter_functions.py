@@ -57,9 +57,9 @@ def _retrieve_course_information(course_ids):
     course_data = dict()
     for course_id in course_ids:
         course = BDB.transactions.get(asset_id=course_id)
-        course_name = course[0].get('asset').get('data').get('name')
         course_data[course_id] = {
-            'name': course_name, 
+            'name': course[0].get('asset').get('data').get('name'), 
+            'lecturer': course[0].get('asset').get('data').get('lecturer'),
             'components': course[-1].get('metadata').get('components')
         }
     return course_data
@@ -82,6 +82,7 @@ def _retrieve_mark_data(mark_files, course_data):
         else:
             mark_data[course_id] = {
                 'name': course_data.get(course_id).get('name'), 
+                'lecturer': course_data.get(course_id).get('lecturer'), 
                 'components': {
                     mark_type: {
                         'mark': mark, 

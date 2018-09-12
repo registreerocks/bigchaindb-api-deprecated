@@ -60,6 +60,7 @@ def test_retrieve_course_ids():
 def test_retrieve_course_information(mock_transactions):
     mock_transactions.get.return_value = get_course_transaction()
     expected_output = {'0x00': {'name': 'Econometrics', 
+                                'lecturer': 'Smith',
                                 'components': [{
                                     'type': 'midterm', 
                                     'weighting': 0.25, 
@@ -77,6 +78,7 @@ def test_retrieve_mark_data(mock_transactions):
     files = get_mark_assets()
     course_data = {'6f4a3c43ec664373720ce1f8158b2779cfa0aec85954791a8ca766a1e53ef8bb': {
         'name': 'Econometrics', 
+        'lecturer': 'Smith',
         'components': [{
             'type': 'midterm', 
             'weighting': 0.25, 
@@ -87,7 +89,8 @@ def test_retrieve_mark_data(mock_transactions):
         }
     }
     expected_output = {'6f4a3c43ec664373720ce1f8158b2779cfa0aec85954791a8ca766a1e53ef8bb': {
-        'name': 'Econometrics', 
+        'name': 'Econometrics',
+        'lecturer': 'Smith',
         'components': {'midterm': {'mark': 85, 'weighting': 0.25, 'timestamp': '2018-09-10 16:00'}}}}
     assert(_retrieve_mark_data(files, course_data) == expected_output)
 
