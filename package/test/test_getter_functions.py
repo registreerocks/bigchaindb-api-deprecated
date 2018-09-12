@@ -74,8 +74,8 @@ def test_retrieve_course_information(mock_transactions):
 
 @mock.patch('bigchaindb_driver.BigchainDB.transactions')
 def test_retrieve_mark_data(mock_transactions):
-    mock_transactions.get.return_value = get_mark_transaction()
-    files = get_mark_assets()
+    mock_transactions.get.side_effect = [get_mark_transaction(), get_mark_transaction1()]
+    files = get_multiple_mark_assets()
     course_data = {'6f4a3c43ec664373720ce1f8158b2779cfa0aec85954791a8ca766a1e53ef8bb': {
         'name': 'Econometrics', 
         'lecturer': 'Smith',
@@ -83,7 +83,7 @@ def test_retrieve_mark_data(mock_transactions):
             'type': 'midterm', 
             'weighting': 0.25, 
             'required': True},
-            {'type': 'final_exam', 
+            {'type': 'final', 
             'weighting': 0.75, 
             'required': True}]
         }
@@ -91,7 +91,12 @@ def test_retrieve_mark_data(mock_transactions):
     expected_output = {'6f4a3c43ec664373720ce1f8158b2779cfa0aec85954791a8ca766a1e53ef8bb': {
         'name': 'Econometrics',
         'lecturer': 'Smith',
-        'components': {'midterm': {'mark': 85, 'weighting': 0.25, 'timestamp': '2018-09-10 16:00'}}}}
+        'year': '2019',
+        'components': {
+            'midterm': {'mark': 85, 'weighting': 0.25, 'timestamp': '2018-09-10 16:00'},
+            'final': {'mark': 85, 'weighting': 0.75, 'timestamp': '2019-09-10 16:00'}
+            }
+        }}
     assert(_retrieve_mark_data(files, course_data) == expected_output)
 
 @mock.patch('bigchaindb_driver.BigchainDB.transactions')
@@ -125,6 +130,22 @@ def get_mark_assets():
             'type': 'midterm'},
         'id': '893e409d441b7f93bbad361053d43d9d9d82e570b5ff39c7fc43d83c96e509b0'}]
 
+def get_multiple_mark_assets():
+    return [{
+        'data': {
+            'asset_type': 'mark',
+            'student_address': '0x03',
+            'course_id': '6f4a3c43ec664373720ce1f8158b2779cfa0aec85954791a8ca766a1e53ef8bb',
+            'type': 'midterm'},
+        'id': '893e409d441b7f93bbad361053d43d9d9d82e570b5ff39c7fc43d83c96e509b0'},
+        {
+        'data': {
+            'asset_type': 'mark',
+            'student_address': '0x03',
+            'course_id': '6f4a3c43ec664373720ce1f8158b2779cfa0aec85954791a8ca766a1e53ef8bb',
+            'type': 'final'},
+        'id': '893e409d441b7f93bbad361053d43d9d9d82e570b5ff39c7fc43d83c96e509b1'}]
+
 def get_mark_transaction():
     return [{
             'metadata': {'mark': 85, 'timestamp': '2018-09-10 16:00'},
@@ -132,6 +153,14 @@ def get_mark_transaction():
             'course_id': '6f4a3c43ec664373720ce1f8158b2779cfa0aec85954791a8ca766a1e53ef8bb',
             'type': 'midterm'}}},
             'id': '893e409d441b7f93bbad361053d43d9d9d82e570b5ff39c7fc43d83c96e509b0'}]
+
+def get_mark_transaction1():
+    return [{
+            'metadata': {'mark': 85, 'timestamp': '2019-09-10 16:00'},
+            'asset': {'data': {'mark': {'student_address': '0x03',
+            'course_id': '6f4a3c43ec664373720ce1f8158b2779cfa0aec85954791a8ca766a1e53ef8bb',
+            'type': 'final'}}},
+            'id': '893e409d441b7f93bbad361053d43d9d9d82e570b5ff39c7fc43d83c96e509b1'}]
 
 def get_mark_search_result():
     return [{

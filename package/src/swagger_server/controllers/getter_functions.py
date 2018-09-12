@@ -79,10 +79,13 @@ def _retrieve_mark_data(mark_files, course_data):
                 'weighting': weighting, 
                 'timestamp': timestamp
             }
+            if mark_data.get(course_id).get('year') < timestamp[:4]:
+                mark_data.get(course_id)['year'] = timestamp[:4]
         else:
             mark_data[course_id] = {
                 'name': course_data.get(course_id).get('name'), 
                 'lecturer': course_data.get(course_id).get('lecturer'), 
+                'year': timestamp[:4],
                 'components': {
                     mark_type: {
                         'mark': mark, 
