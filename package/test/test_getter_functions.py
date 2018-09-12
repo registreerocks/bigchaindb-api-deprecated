@@ -9,6 +9,7 @@ from src.swagger_server.controllers.getter_functions import (_get_all_assets,
                                                              _get_course_marks_by_lecturer,
                                                              _retrieve_course_ids,
                                                              _retrieve_course_information,
+                                                             _retrieve_degree_data,
                                                              _retrieve_mark_data)
 
 
@@ -121,12 +122,29 @@ def test_get_course_marks_by_lecturer(mock_assets, mock_transactions):
             }}}}}
     assert(_get_course_marks_by_lecturer('Smith')==expected_output)
 
+@mock.patch('bigchaindb_driver.BigchainDB.transactions')
+def test_retrieve_degree_data(mock_transactions):
+    mock_transactions.get.return_value = get_degree_transaction()
+    
+    files = get_mark_assets()
+    expected_output = {
+            'name': 'Fintech',
+            'level': 'Master',
+            'courses': [{
+                    'course_id': '6f4a3c43ec664373720ce1f8158b2779cfa0aec85954791a8ca766a1e53ef8bb', 
+                    'weighting': 1, 
+                    'semester': 1
+                    }]
+    }
+    assert(_retrieve_degree_data(files) == expected_output)
+
 def get_mark_assets():
     return [{
         'data': {
             'asset_type': 'mark',
             'student_address': '0x03',
             'course_id': '6f4a3c43ec664373720ce1f8158b2779cfa0aec85954791a8ca766a1e53ef8bb',
+            'degree_id': '6f4a3c43ec664373720ce1f8158b2779cfa0aec85954791a8ca766a1e53ef7aa',
             'type': 'midterm'},
         'id': '893e409d441b7f93bbad361053d43d9d9d82e570b5ff39c7fc43d83c96e509b0'}]
 
@@ -245,3 +263,23 @@ def get_course_search_result():
                     'university_id': "ece3537ac407a502e0586fbb8ad76771479cfd0689a38013b91ee77d97452023",
                     'lecturer': 'Smith'},
                 'id': '6f4a3c43ec664373720ce1f8158b2779cfa0aec85954791a8ca766a1e53ef8bb'}]
+
+
+def get_degree_transaction():
+    return [{
+            'metadata': {
+                'courses': [{
+                    'course_id': '6f4a3c43ec664373720ce1f8158b2779cfa0aec85954791a8ca766a1e53ef8bb', 
+                    'weighting': 1, 
+                    'semester': 1
+                    }]
+                },
+            'asset': {
+                'data': {
+                    'asset_type': 'degree',
+                    'level': 'Master',
+                    'name': 'Fintech',
+                    'description': 'This course is cool degree',
+                    'id': 'MPhil-Fintech',
+                    'university_id': "ece3537ac407a502e0586fbb8ad76771479cfd0689a38013b91ee77d97452023"}},
+            'id': '6f4a3c43ec664373720ce1f8158b2779cfa0aec85954791a8ca766a1e53ef7bb'}]
