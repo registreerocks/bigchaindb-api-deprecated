@@ -1,845 +1,867 @@
----
-swagger: "2.0"
+openapi: 3.0.0
 info:
-  description: ""
-  version: "0.1.0"
-  title: "BigchaindDB API"
-host: "localhost:8080"
-basePath: "/v0.1"
+  description: ''
+  version: 0.1.0
+  title: BigchaindDB API
 tags:
-- name: "BigchaindDB API"
-  description: ""
-schemes:
-- "https"
+  - name: BigchaindDB API
+    description: ''
 paths:
   /university/get_all:
     get:
       tags:
-      - "university"
-      summary: "retrieve all universities"
-      description: ""
-      operationId: "get_all_universities"
+        - university
+      summary: retrieve all universities
+      description: ''
+      operationId: get_all_universities
       parameters:
-      - in: "query"
-        name: "meta_flag"
-        type: "boolean"
-        description: "True if metadata should be returned"
-      produces:
-      - "application/json"
+        - in: query
+          name: meta_flag
+          description: True if metadata should be returned
+          schema:
+            type: boolean
       responses:
-        200:
+        '200':
           description: OK
-      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
   /university/get_by_id:
     get:
       tags:
-      - "university"
-      summary: "retrieve a university by its id"
-      description: ""
-      operationId: "university_get_by_id"
+        - university
+      summary: retrieve a university by its id
+      description: ''
+      operationId: university_get_by_id
       parameters:
-      - in: "query"
-        name: "id"
-        type: "string"
-        description: "University id"
-      - in: "query"
-        name: "meta_flag"
-        type: "boolean"
-        description: "True if metadata should be returned"
-      produces:
-      - "application/json"
+        - in: query
+          name: id
+          description: University id
+          schema:
+            type: string
+        - in: query
+          name: meta_flag
+          description: True if metadata should be returned
+          schema:
+            type: boolean
       responses:
-        200:
+        '200':
           description: OK
-      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
   /university/create:
     post:
       tags:
-        - "university"
-      summary: "create a new university"
-      description: ""
-      operationId: "create_university"
-      consumes:
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "University object that needs to be added to the database"
-        required: true
-        schema:
-          $ref: "#/definitions/University"
+        - university
+      summary: create a new university
+      description: ''
+      operationId: create_university
       responses:
-        200:
+        '200':
           description: OK
-      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/University'
+        description: University object that needs to be added to the database
+        required: true
   /university/get_degrees:
     get:
       tags:
-      - "university"
-      summary: "returns all degrees of a university"
-      operationId: "university_get_degrees"
-      produces:
-      - "application/json"
+        - university
+      summary: returns all degrees of a university
+      operationId: university_get_degrees
       parameters:
-      - in: "query"
-        name: "id"
-        description: "Id of the university"
-        required: true
-        type: "string"
-      - in: "query"
-        name: "meta_flag"
-        type: "boolean"
-        description: "True if metadata should be returned"
+        - in: query
+          name: id
+          description: Id of the university
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: meta_flag
+          description: True if metadata should be returned
+          schema:
+            type: boolean
       responses:
-        200:
+        '200':
           description: OK
-        409: 
+        '401':
+          description: Authentication error
+        '409':
           description: Conflict
-      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
   /university/get_courses:
     get:
       tags:
-      - "university"
-      summary: "returns all courses of a university"
-      operationId: "university_get_courses"
-      produces:
-      - "application/json"
+        - university
+      summary: returns all courses of a university
+      operationId: university_get_courses
       parameters:
-      - in: "query"
-        name: "id"
-        description: "Id of the university"
-        required: true
-        type: "string"
-      - in: "query"
-        name: "meta_flag"
-        type: "boolean"
-        description: "True if metadata should be returned"
+        - in: query
+          name: id
+          description: Id of the university
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: meta_flag
+          description: True if metadata should be returned
+          schema:
+            type: boolean
       responses:
-        200:
+        '200':
           description: OK
-        409: 
+        '401':
+          description: Authentication error
+        '409':
           description: Conflict
-      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
   /degree/get_all:
     get:
       tags:
-      - "degree"
-      summary: "retrieve all degrees"
-      description: ""
-      operationId: "get_all_degrees"
+        - degree
+      summary: retrieve all degrees
+      description: ''
+      operationId: get_all_degrees
       parameters:
-      - in: "query"
-        name: "meta_flag"
-        type: "boolean"
-        description: "True if metadata should be returned"
-      produces:
-      - "application/json"
+        - in: query
+          name: meta_flag
+          description: True if metadata should be returned
+          schema:
+            type: boolean
       responses:
-        200:
+        '200':
           description: OK
-      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
   /degree/get_by_id:
     get:
       tags:
-      - "degree"
-      summary: "retrieve a degree by its id"
-      description: ""
-      operationId: "degree_get_by_id"
+        - degree
+      summary: retrieve a degree by its id
+      description: ''
+      operationId: degree_get_by_id
       parameters:
-      - in: "query"
-        name: "id"
-        type: "string"
-        description: "Degree id"
-      - in: "query"
-        name: "meta_flag"
-        type: "boolean"
-        description: "True if metadata should be returned"
-      produces:
-      - "application/json"
+        - in: query
+          name: id
+          description: Degree id
+          schema:
+            type: string
+        - in: query
+          name: meta_flag
+          description: True if metadata should be returned
+          schema:
+            type: boolean
       responses:
-        200:
+        '200':
           description: OK
-      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
   /degree/get_courses:
     get:
       tags:
-      - "degree"
-      summary: "retrieve all courses and their information belonging to a degree"
-      description: ""
-      operationId: "degree_get_courses"
+        - degree
+      summary: retrieve all courses and their information belonging to a degree
+      description: ''
+      operationId: degree_get_courses
       parameters:
-      - in: "query"
-        name: "id"
-        type: "string"
-        description: "Degree id"
-      - in: "query"
-        name: "meta_flag"
-        type: "boolean"
-        description: "True if course metadata should be returned"
-      produces:
-      - "application/json"
+        - in: query
+          name: id
+          description: Degree id
+          schema:
+            type: string
+        - in: query
+          name: meta_flag
+          description: True if course metadata should be returned
+          schema:
+            type: boolean
       responses:
-        200:
+        '200':
           description: OK
-      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
   /degree/create:
     post:
       tags:
-        - "degree"
-      summary: "create a new degree"
-      description: ""
-      operationId: "create_degree"
-      consumes:
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Degree object that needs to be added to the database"
-        required: true
-        schema:
-          $ref: "#/definitions/Degree"
+        - degree
+      summary: create a new degree
+      description: ''
+      operationId: create_degree
       responses:
-        200:
+        '200':
           description: OK
-      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Degree'
+        description: Degree object that needs to be added to the database
+        required: true
   /degree/append_courses:
     post:
       tags:
-        - "degree"
-      summary: "append the list of courses that belong to a degree"
-      description: ""
-      operationId: "degree_append_courses"
-      consumes:
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "List of courses and their weightings"
-        required: true
-        schema:
-          $ref: "#/definitions/DegreeAppendCourses"
+        - degree
+      summary: append the list of courses that belong to a degree
+      description: ''
+      operationId: degree_append_courses
       responses:
-        200:
+        '200':
           description: OK
-      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DegreeAppendCourses'
+        description: List of courses and their weightings
+        required: true
   /degree/delete_course:
     post:
       tags:
-        - "degree"
-      summary: "delete one course from the degree by course_id"
-      description: ""
-      operationId: "degree_delete_course"
-      consumes:
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Degree object that needs to be added to the database"
-        required: true
-        schema:
-          $ref: "#/definitions/DegreeDeleteCourse"
+        - degree
+      summary: delete one course from the degree by course_id
+      description: ''
+      operationId: degree_delete_course
       responses:
-        200:
+        '200':
           description: OK
-      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DegreeDeleteCourse'
+        description: Degree object that needs to be added to the database
+        required: true
   /course/get_all:
     get:
       tags:
-      - "course"
-      summary: "retrieve all courses"
-      description: ""
-      operationId: "get_all_courses"
+        - course
+      summary: retrieve all courses
+      description: ''
+      operationId: get_all_courses
       parameters:
-      - in: "query"
-        name: "meta_flag"
-        type: "boolean"
-        description: "True if metadata should be returned"
-      produces:
-      - "application/json"
+        - in: query
+          name: meta_flag
+          description: True if metadata should be returned
+          schema:
+            type: boolean
       responses:
-        200:
+        '200':
           description: OK
-      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
   /course/get_by_id:
     get:
       tags:
-      - "course"
-      summary: "retrieve a course by its id"
-      description: ""
-      operationId: "course_get_by_id"
+        - course
+      summary: retrieve a course by its id
+      description: ''
+      operationId: course_get_by_id
       parameters:
-      - in: "query"
-        name: "id"
-        type: "string"
-        description: "Course id"
-      - in: "query"
-        name: "meta_flag"
-        type: "boolean"
-        description: "True if metadata should be returned"
-      produces:
-      - "application/json"
+        - in: query
+          name: id
+          description: Course id
+          schema:
+            type: string
+        - in: query
+          name: meta_flag
+          description: True if metadata should be returned
+          schema:
+            type: boolean
       responses:
-        200:
+        '200':
           description: OK
-      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
   /course/get_by_lecturer:
     get:
       tags:
-      - "course"
-      summary: "retrieve all courses taught by one particular lecturer"
-      description: ""
-      operationId: "course_get_by_lecturer"
+        - course
+      summary: retrieve all courses taught by one particular lecturer
+      description: ''
+      operationId: course_get_by_lecturer
       parameters:
-      - in: "query"
-        name: "lecturer"
-        type: "string"
-        description: "Lecturer's name"
-      - in: "query"
-        name: "meta_flag"
-        type: "boolean"
-        description: "True if metadata should be returned"
-      produces:
-      - "application/json"
+        - in: query
+          name: lecturer
+          description: Lecturer's name
+          schema:
+            type: string
+        - in: query
+          name: meta_flag
+          description: True if metadata should be returned
+          schema:
+            type: boolean
       responses:
-        200:
+        '200':
           description: OK
-      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
   /course/create:
     post:
       tags:
-        - "course"
-      summary: "create a new course"
-      description: ""
-      operationId: "create_course"
-      consumes:
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Course object that needs to be added to the database"
-        required: true
-        schema:
-          $ref: "#/definitions/Course"
+        - course
+      summary: create a new course
+      description: ''
+      operationId: create_course
       responses:
-        200:
+        '200':
           description: OK
-        409: 
+        '401':
+          description: Authentication error
+        '409':
           description: Conflict
-      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Course'
+        description: Course object that needs to be added to the database
+        required: true
   /course/update_passing:
     post:
       tags:
-        - "course"
-      summary: "update the passing threshold of a course"
-      description: ""
-      operationId: "course_update_passing"
-      consumes:
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "course id and new passing threshold"
-        required: true
-        schema:
-          $ref: "#/definitions/CourseUpdatePassing"
+        - course
+      summary: update the passing threshold of a course
+      description: ''
+      operationId: course_update_passing
       responses:
-        200:
+        '200':
           description: OK
-      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseUpdatePassing'
+        description: course id and new passing threshold
+        required: true
   /course/update_distinction:
     post:
       tags:
-        - "course"
-      summary: "update the distinction threshold of a course"
-      description: ""
-      operationId: "course_update_distinction"
-      consumes:
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "course id and new distinction threshold"
-        required: true
-        schema:
-          $ref: "#/definitions/CourseUpdateDistinction"
+        - course
+      summary: update the distinction threshold of a course
+      description: ''
+      operationId: course_update_distinction
       responses:
-        200:
+        '200':
           description: OK
-      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseUpdateDistinction'
+        description: course id and new distinction threshold
+        required: true
   /course/update_components:
     post:
       tags:
-        - "course"
-      summary: "update the components of a course"
-      description: ""
-      operationId: "course_update_components"
-      consumes:
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "resubmit the whole component structure"
-        required: true
-        schema:
-          $ref: "#/definitions/CourseUpdateComponents"
+        - course
+      summary: update the components of a course
+      description: ''
+      operationId: course_update_components
       responses:
-        200:
+        '200':
           description: OK
-      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseUpdateComponents'
+        description: resubmit the whole component structure
+        required: true
   /course/add_prerequisite:
     post:
       tags:
-        - "course"
-      summary: "add a prerequisite to a course"
-      description: ""
-      operationId: "course_add_prerequisite"
-      consumes:
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "course id and prerequisite id"
-        required: true
-        schema:
-          $ref: "#/definitions/CoursePrerequisite"
+        - course
+      summary: add a prerequisite to a course
+      description: ''
+      operationId: course_add_prerequisite
       responses:
-        200:
+        '200':
           description: OK
-      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+      requestBody:
+        $ref: '#/components/requestBodies/CoursePrerequisite'
   /course/delete_prerequisite:
     post:
       tags:
-        - "course"
-      summary: "delete a prerequisite from a course"
-      description: ""
-      operationId: "course_delete_prerequisite"
-      consumes:
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "course id and prerequisite id"
-        required: true
-        schema:
-          $ref: "#/definitions/CoursePrerequisite"
+        - course
+      summary: delete a prerequisite from a course
+      description: ''
+      operationId: course_delete_prerequisite
       responses:
-        200:
+        '200':
           description: OK
-      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+      requestBody:
+        $ref: '#/components/requestBodies/CoursePrerequisite'
   /course/add_corequisite:
     post:
       tags:
-        - "course"
-      summary: "add a corequisite to a course"
-      description: ""
-      operationId: "course_add_corequisite"
-      consumes:
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "course id and corequisite id"
-        required: true
-        schema:
-          $ref: "#/definitions/CourseCorequisite"
+        - course
+      summary: add a corequisite to a course
+      description: ''
+      operationId: course_add_corequisite
       responses:
-        200:
+        '200':
           description: OK
-      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+      requestBody:
+        $ref: '#/components/requestBodies/CourseCorequisite'
   /course/delete_corequisite:
     post:
       tags:
-        - "course"
-      summary: "delete a corequisite from a course"
-      description: ""
-      operationId: "course_delete_corequisite"
-      consumes:
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "course id and corequisite id"
-        required: true
-        schema:
-          $ref: "#/definitions/CourseCorequisite"
+        - course
+      summary: delete a corequisite from a course
+      description: ''
+      operationId: course_delete_corequisite
       responses:
-        200:
+        '200':
           description: OK
-      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+      requestBody:
+        $ref: '#/components/requestBodies/CourseCorequisite'
   /mark/create:
     post:
       tags:
-        - "mark"
-      summary: "create a new mark"
-      description: ""
-      operationId: "create_mark"
-      consumes:
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Mark object that needs to be added to the database"
-        required: true
-        schema:
-          $ref: "#/definitions/Mark"
+        - mark
+      summary: create a new mark
+      description: ''
+      operationId: create_mark
       responses:
-        200:
+        '200':
           description: OK
-      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Mark'
+        description: Mark object that needs to be added to the database
+        required: true
   /mark/get_by_student:
     get:
       tags:
-      - "mark"
-      summary: "returns all marks for a particular student"
-      operationId: "get_marks_by_student"
-      produces:
-      - "application/json"
+        - mark
+      summary: returns all marks for a particular student
+      operationId: get_marks_by_student
       parameters:
-      - in: "query"
-        name: "student_address"
-        description: "Smart contract address of student to return"
-        required: true
-        type: "string"
+        - in: query
+          name: student_address
+          description: Smart contract address of student to return
+          required: true
+          schema:
+            type: string
       responses:
-        200:
+        '200':
           description: OK
-      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
   /mark/get_by_student_new:
     get:
       tags:
-      - "mark"
-      summary: "returns all marks for a particular student"
-      operationId: "get_marks_by_student_new"
-      produces:
-      - "application/json"
+        - mark
+      summary: returns all marks for a particular student
+      operationId: get_marks_by_student_new
       parameters:
-      - in: "query"
-        name: "student_address"
-        description: "Smart contract address of student to return"
-        required: true
-        type: "string"
+        - in: query
+          name: student_address
+          description: Smart contract address of student to return
+          required: true
+          schema:
+            type: string
       responses:
-        200:
+        '200':
           description: OK
-      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
   /mark/get_by_course:
     get:
       tags:
-      - "mark"
-      summary: "returns all marks for a particular course"
-      operationId: "get_marks_by_course_id"
-      produces:
-      - "application/json"
+        - mark
+      summary: returns all marks for a particular course
+      operationId: get_marks_by_course_id
       parameters:
-      - in: "query"
-        name: "id"
-        description: "ID of the course entry"
-        required: true
-        type: "string"
+        - in: query
+          name: id
+          description: ID of the course entry
+          required: true
+          schema:
+            type: string
       responses:
-        200:
+        '200':
           description: OK
-      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
   /mark/get_by_lecturer:
     get:
       tags:
-      - "mark"
-      summary: "returns all marks for a lecturer, grouped by courses and students"
-      operationId: "get_course_marks_by_lecturer"
-      produces:
-      - "application/json"
+        - mark
+      summary: 'returns all marks for a lecturer, grouped by courses and students'
+      operationId: get_course_marks_by_lecturer
       parameters:
-      - in: "query"
-        name: "lecturer"
-        description: "name of the lecturer"
-        required: true
-        type: "string"
+        - in: query
+          name: lecturer
+          description: name of the lecturer
+          required: true
+          schema:
+            type: string
       responses:
-        200:
+        '200':
           description: OK
-      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
   /mark/update:
     post:
       tags:
-        - "mark"
-      summary: "update a student's mark"
-      description: ""
-      operationId: "mark_update"
-      consumes:
-      - "application/json"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "mark id and new mark"
-        required: true
-        schema:
-          $ref: "#/definitions/MarkUpdate"
+        - mark
+      summary: update a student's mark
+      description: ''
+      operationId: mark_update
       responses:
-        200:
+        '200':
           description: OK
-      x-swagger-router-controller: "swagger_server.controllers.bigchaindb_API_functions"
-definitions:
-  University:
-    type: "object"
-    properties:
-      asset:
-        type: "object"
-        properties:
-          data:
-            type: "object"
-            properties:
-              asset_type:
-                type: "string"
-                default: "university"
-              name:
-                type: "string"
-              short:
-                type: "string"
-              physical_address:
-                type: "string"
-      metadata:
-        type: "object"
-        properties: 
-          timestamp:
-            type: "string"
-            format: "date"
-    xml:
-      name: "University"
-  Degree:
-    type: "object"
-    properties:
-      asset:
-        type: "object"
-        properties:
-          data:
-            type: "object"
-            properties:
-              asset_type:
-                type: "string"
-                default: "degree"
-              name:
-                type: "string"
-              level:
-                type: "string"
-              description:
-                type: "string"
-              id:
-                type: "string"
-              university_id:
-                type: "string"
-      metadata:
-        type: "object"
-        properties:
-          courses:
-            type: "array"
-            items: 
-              type: "object"
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MarkUpdate'
+        description: mark id and new mark
+        required: true
+servers:
+  - url: 'http://0.0.0.0:8000/v0.1'
+  # - url: 'https://localhost:8080/v0.1'
+components:
+  requestBodies:
+    CoursePrerequisite:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CoursePrerequisite'
+      description: course id and prerequisite id
+      required: true
+    CourseCorequisite:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CourseCorequisite'
+      description: course id and corequisite id
+      required: true
+  schemas:
+    University:
+      type: object
+      properties:
+        asset:
+          type: object
+          properties:
+            data:
+              type: object
               properties:
+                asset_type:
+                  type: string
+                  default: university
+                name:
+                  type: string
+                short:
+                  type: string
+                physical_address:
+                  type: string
+        metadata:
+          type: object
+          properties:
+            timestamp:
+              type: string
+              format: date
+      xml:
+        name: University
+    Degree:
+      type: object
+      properties:
+        asset:
+          type: object
+          properties:
+            data:
+              type: object
+              properties:
+                asset_type:
+                  type: string
+                  default: degree
+                name:
+                  type: string
+                level:
+                  type: string
+                description:
+                  type: string
+                id:
+                  type: string
+                university_id:
+                  type: string
+        metadata:
+          type: object
+          properties:
+            courses:
+              type: array
+              items:
+                type: object
+                properties:
+                  course_id:
+                    type: string
+                  weighting:
+                    type: number
+                    format: float
+                    minimum: 0
+                    maximum: 100
+                  semester:
+                    type: array
+                    items:
+                      type: integer
+            timestamp:
+              type: string
+              format: date
+      xml:
+        name: Degree
+    Course:
+      type: object
+      properties:
+        asset:
+          type: object
+          properties:
+            data:
+              type: object
+              properties:
+                asset_type:
+                  type: string
+                  default: course
+                name:
+                  type: string
+                description:
+                  type: string
+                id:
+                  type: string
+                lecturer:
+                  type: string
+                university_id:
+                  type: string
+        metadata:
+          type: object
+          properties:
+            passing:
+              type: integer
+            distinction:
+              type: integer
+            components:
+              type: array
+              items:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  weighting:
+                    type: number
+                    format: float
+                    minimum: 0
+                    maximum: 100
+                  required:
+                    type: boolean
+            prerequisite:
+              type: array
+              items:
+                type: string
+            corequisite:
+              type: array
+              items:
+                type: string
+            timestamp:
+              type: string
+              format: date
+      xml:
+        name: Course
+    Mark:
+      type: object
+      properties:
+        asset:
+          type: object
+          properties:
+            data:
+              type: object
+              properties:
+                asset_type:
+                  type: string
+                  default: mark
+                student_address:
+                  type: string
+                degree_id:
+                  type: string
                 course_id:
-                  type: "string"
-                weighting:
-                  type: "number"
-                  format: "float"
-                  minimum: 0
-                  maximum: 1
-                semester:
-                  type: "array"
-                  items: 
-                    type: "integer"
-          timestamp:
-            type: "string"
-            format: "date"
-    xml:
-      name: "Degree"
-  Course:
-    type: "object"
-    properties:
-      asset:
-        type: "object"
-        properties:
-          data:
-            type: "object"
-            properties:
-              asset_type:
-                type: "string"
-                default: "course"
-              name:
-                type: "string"
-              description:
-                type: "string"
-              id:
-                type: "string"
-              lecturer:
-                type: "string"
-              university_id:
-                type: "string"
-      metadata:
-        type: "object"
-        properties:
-          passing:
-            type: "integer"
-          distinction:
-            type: "integer"
-          components:
-            type: "array"
-            items:
-              type: "object"
-              properties:
+                  type: string
                 type:
-                  type: "string"
-                weighting:
-                  type: "number"
-                  format: "float"
-                  minimum: 0
-                  maximum: 1
-                required:
-                  type: "boolean"
-          prerequisite:
-            type: "array"
-            items:
-              type: "string"
-          corequisite:
-            type: "array"
-            items:
-              type: "string"
-          timestamp:
-            type: "string"
-            format: "date"
-    xml:
-      name: "Course"
-  Mark:
-    type: "object"
-    properties:
-      asset:
-        type: "object"
-        properties:
-          data:
-            type: "object"
+                  type: string
+        metadata:
+          type: object
+          properties:
+            mark:
+              type: integer
+              minimum: 0
+              maximum: 100
+            timestamp:
+              type: string
+              format: date
+      xml:
+        name: Mark
+    DegreeAppendCourses:
+      type: object
+      properties:
+        degree_id:
+          type: string
+        courses:
+          type: array
+          items:
+            type: object
             properties:
-              asset_type:
-                type: "string"
-                default: "mark"
-              student_address:
-                type: "string"
-              degree_id:
-                type: "string"
               course_id:
-                type: "string"
+                type: string
+              weighting:
+                type: number
+                format: float
+                minimum: 0
+                maximum: 100
+              semester:
+                type: array
+                items:
+                  type: integer
+      xml:
+        name: DegreeAppendCourses
+    DegreeDeleteCourse:
+      type: object
+      properties:
+        degree_id:
+          type: string
+        course_id:
+          type: string
+      xml:
+        name: DegreeDeleteCourse
+    CourseUpdatePassing:
+      type: object
+      properties:
+        course_id:
+          type: string
+        passing:
+          type: integer
+          minimum: 0
+          maximum: 100
+      xml:
+        name: CourseUpdatePassing
+    CourseUpdateDistinction:
+      type: object
+      properties:
+        course_id:
+          type: string
+        distinction:
+          type: integer
+          minimum: 0
+          maximum: 100
+      xml:
+        name: CourseUpdateDistinction
+    CourseUpdateComponents:
+      type: object
+      properties:
+        course_id:
+          type: string
+        components:
+          type: array
+          items:
+            type: object
+            properties:
               type:
-                type: "string"
-      metadata:
-        type: "object"
-        properties:
-          mark:
-            type: "integer"
-            minimum: 0
-            maximum: 100
-          timestamp:
-            type: "string"
-            format: "date"
-    xml:
-      name: "Mark"
-  DegreeAppendCourses:
-    type: "object"
-    properties:
-      degree_id:
-        type: "string"
-      courses:
-        type: "array"
-        items:
-          type: "object"
-          properties:
-            course_id:
-              type: "string"
-            weighting:
-              type: "number"
-              format: "float"
-              minimum: 0
-              maximum: 1
-            semester:
-              type: "array"
-              items: 
-                type: "integer"
-    xml:
-      name: "DegreeAppendCourses"
-  DegreeDeleteCourse:
-    type: "object"
-    properties:
-      degree_id:
-        type: "string"
-      course_id:
-        type: "string"
-    xml:
-      name: "DegreeDeleteCourse"
-  CourseUpdatePassing:
-    type: "object"
-    properties:
-      course_id:
-        type: "string"
-      passing:
-        type: "integer"
-        minimum: 0
-        maximum: 100
-    xml:
-      name: "CourseUpdatePassing"
-  CourseUpdateDistinction:
-    type: "object"
-    properties:
-      course_id:
-        type: "string"
-      distinction:
-        type: "integer"
-        minimum: 0
-        maximum: 100
-    xml:
-      name: "CourseUpdateDistinction"
-  CourseUpdateComponents:
-    type: "object"
-    properties:
-      course_id:
-        type: "string"
-      components:
-        type: "array"
-        items:
-          type: "object"
-          properties:
-            type:
-              type: "string"
-            weighting:
-              type: "number"
-              format: "float"
-              minimum: 0
-              maximum: 1
-            required:
-              type: "boolean"
-    xml:
-      name: "CourseUpdateComponents"
-  CoursePrerequisite:
-    type: "object"
-    properties:
-      course_id:
-        type: "string"
-      prerequisite_id:
-        type: "string"
-    xml:
-      name: "CoursePrerequisite"
-  CourseCorequisite:
-    type: "object"
-    properties:
-      course_id:
-        type: "string"
-      corequisite_id:
-        type: "string"
-    xml:
-      name: "CourseCorequisite"
-  MarkUpdate:
-    type: "object"
-    properties:
-      mark_id:
-        type: "string"
-      mark:
-        type: "integer"
-        minimum: 0
-        maximum: 100
-    xml:
-      name: "MarkUpdate"
+                type: string
+              weighting:
+                type: number
+                format: float
+                minimum: 0
+                maximum: 100
+              required:
+                type: boolean
+      xml:
+        name: CourseUpdateComponents
+    CoursePrerequisite:
+      type: object
+      properties:
+        course_id:
+          type: string
+        prerequisite_id:
+          type: string
+      xml:
+        name: CoursePrerequisite
+    CourseCorequisite:
+      type: object
+      properties:
+        course_id:
+          type: string
+        corequisite_id:
+          type: string
+      xml:
+        name: CourseCorequisite
+    MarkUpdate:
+      type: object
+      properties:
+        mark_id:
+          type: string
+        mark:
+          type: integer
+          minimum: 0
+          maximum: 100
+      xml:
+        name: MarkUpdate
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []
