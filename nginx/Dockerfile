@@ -1,4 +1,3 @@
-FROM smebberson/alpine-nginx
-MAINTAINER SolIdarity
+FROM nginx:alpine
 
-ADD sites-enabled.conf /etc/nginx/conf.d/sites-enabled.conf
+COPY nginx.conf /etc/nginx/nginx.conf

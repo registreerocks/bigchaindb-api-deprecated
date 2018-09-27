@@ -13,6 +13,8 @@ services:
       ALGORITHMS: "['RS256']"
     depends_on:
       - bigchaindb
+    networks:
+      - backbone
   mongodb:
     image: mongo:3.6
     # ports:
@@ -56,3 +58,8 @@ services:
       - "8443:8443"
     volumes:
       - ~/cert:/etc/cert
+    networks:
+      - backbone
+networks: 
+  backbone:
+    driver: bridge
