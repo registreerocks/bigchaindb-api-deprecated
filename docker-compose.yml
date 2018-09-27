@@ -20,6 +20,8 @@ services:
     # ports:
     #   - "27017:27017"
     command: mongod
+    networks:
+      - backbone
   bigchaindb:
     depends_on:
       - mongodb
@@ -38,6 +40,8 @@ services:
     #   - "9984:9984"
     #   - "9985:9985"
     #   - "46658"
+    networks:
+      - backbone
   tendermint:
     image: tendermint/tendermint:0.19.9
     # volumes:
@@ -47,6 +51,8 @@ services:
     #   - "46656:46656"
     #   - "46657:46657"
     command: sh -c "tendermint init && tendermint node --consensus.create_empty_blocks=false --proxy_app=tcp://bigchaindb:46658"
+    networks:
+      - backbone
   nginx:
     restart: always
     build: ./nginx
