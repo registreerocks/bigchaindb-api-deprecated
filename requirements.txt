@@ -1,8 +1,0 @@
-pylint
-bigchaindb_driver
-jupyter
-flask
-python-dotenv
-python-jose-cryptodome
-flask-cors
-six
