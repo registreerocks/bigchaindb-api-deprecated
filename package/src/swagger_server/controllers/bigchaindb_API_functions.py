@@ -51,15 +51,9 @@ def get_all_courses(meta_flag):
 def get_all_degrees(meta_flag):
     return _get_all_assets('degree', meta_flag)
 
-# delete that?
-@requires_auth
-@requires_scope('admin', 'lecturer', 'student', 'registree')
-def get_marks_by_student(student_address):
-    return  _get_assets_by_key('mark', 'student_address', student_address, True)
-
 # @requires_auth
 # @requires_scope('admin', 'lecturer', 'student', 'registree')
-def get_marks_by_student_new(student_address):
+def get_marks_by_student(student_address):
     return  _get_marks_by_student(student_address)
 
 @requires_auth

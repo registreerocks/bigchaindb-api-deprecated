@@ -497,25 +497,6 @@ paths:
         '401':
           description: Authentication error
       x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
-  /mark/get_by_student_new:
-    get:
-      tags:
-        - mark
-      summary: returns all marks for a particular student
-      operationId: get_marks_by_student_new
-      parameters:
-        - in: query
-          name: student_address
-          description: Smart contract address of student to return
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
-        '401':
-          description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
   /mark/get_by_course:
     get:
       tags:
@@ -576,7 +557,6 @@ paths:
         required: true
 servers:
   - url: 'http://0.0.0.0:8000/v0.1'
-  # - url: 'https://localhost:8080/v0.1'
 components:
   requestBodies:
     CoursePrerequisite:
