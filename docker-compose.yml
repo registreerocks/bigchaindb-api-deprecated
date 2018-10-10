@@ -1,0 +1,64 @@
+version: '2.1'
+
+services:
+
+  bigchaindb_api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8002:8000"
+    environment:
+      AUTH0_DOMAIN: "your.domain.auth0.com"
+      API_IDENTIFIER: "https://your.domain/yourapi"
+      ALGORITHMS: "['RS256']"
+    depends_on:
+      - bigchaindb
+    networks:
+      - backbone
+
+  mongodb:
+    image: mongo:3.6
+    command: mongod
+    networks:
+      - backbone
+
+  bigchaindb:
+    depends_on:
+      - mongodb
+      - tendermint
+    image: bigchaindb/bigchaindb:2.0.0-alpha6
+    environment:
+      BIGCHAINDB_DATABASE_BACKEND: localmongodb
+      BIGCHAINDB_DATABASE_HOST: mongodb
+      BIGCHAINDB_DATABASE_PORT: 27017
+      BIGCHAINDB_SERVER_BIND: 0.0.0.0:9984
+      BIGCHAINDB_WSSERVER_HOST: 0.0.0.0
+      BIGCHAINDB_WSSERVER_ADVERTISED_HOST: bigchaindb
+      BIGCHAINDB_TENDERMINT_HOST: tendermint
+      BIGCHAINDB_TENDERMINT_PORT: 46657
+    networks:
+      - backbone
+
+  tendermint:
+    image: tendermint/tendermint:0.19.9
+    entrypoint: ''
+    command: sh -c "tendermint init && tendermint node --consensus.create_empty_blocks=false --proxy_app=tcp://bigchaindb:46658"
+    networks:
+      - backbone
+
+  nginx:
+    restart: always
+    build: ./nginx
+    links:
+      - bigchaindb_api
+    ports:
+      - "8443:8443"
+    volumes:
+      - ~/cert:/etc/cert
+    networks:
+      - backbone
+
+networks: 
+  backbone:
+    driver: bridge
