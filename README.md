@@ -11,7 +11,7 @@ This repository includes an API around [BigchainDB](https://www.bigchaindb.com/)
         $ docker-compose up
     Wait for about a minute until all is configured correctly.
 
-You can explore the API by visiting http://localhost:8002/v0.1/ui/. It not functioning though due to the lack of a valid JWT.
+You can explore the API by visiting http://localhost:8002/v0.1/ui/. It is not functioning though due to the lack of a valid JWT.
 
 To rebuild the image, call
 
@@ -19,12 +19,12 @@ To rebuild the image, call
 
 ## Deployment
 
-1. Close the direct access to BigchainDB by removing the lines 
+1. Close the direct access to API by removing the lines 
     ```
     ports:
         - "8002:8000"
     ```
-    from the `docker-compose.yaml`
+    from the `docker-compose.yml`
 
 2. Change the environment variables 
     ```
