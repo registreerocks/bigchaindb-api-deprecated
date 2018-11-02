@@ -9,8 +9,8 @@ services:
     ports:
       - "8002:8000"
     environment:
-      AUTH0_DOMAIN: "your.domain.auth0.com"
-      API_IDENTIFIER: "https://your.domain/yourapi"
+      AUTH0_DOMAIN: "registree.eu.auth0.com"
+      API_IDENTIFIER: "https://registree.rocks/apis"
       ALGORITHMS: "['RS256']"
     depends_on:
       - bigchaindb
