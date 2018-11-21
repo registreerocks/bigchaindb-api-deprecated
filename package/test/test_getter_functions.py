@@ -117,9 +117,11 @@ def test_get_course_marks_by_lecturer(mock_assets, mock_transactions):
                 'weighting': 0.75, 
                 'required': True}], 
             'course_marks': {
-                '0x03': {
-                    'midterm': 85
-            }}}}}
+                '0x03': [{
+                    'id': '893e409d441b7f93bbad361053d43d9d9d82e570b5ff39c7fc43d83c96e509b0',
+                    'type': 'midterm',
+                    'mark': 85
+            }]}}}}
     assert(_get_course_marks_by_lecturer('Smith')==expected_output)
 
 @mock.patch('bigchaindb_driver.BigchainDB.transactions')

@@ -137,12 +137,11 @@ def _get_course_marks_by_lecturer(lecturer):
         course_marks = dict()
         for mark in marks:
             student_address = mark.get('data').get('student_address')
-            mark_type = mark.get('data').get('type')
-            grade = mark.get('metadata').get('mark')
+            mark_data = {'id': mark.get('id'), 'type': mark.get('data').get('type'), 'mark': mark.get('metadata').get('mark')}
             if not course_marks.get(student_address):
-                course_marks[student_address] = {mark_type: grade}
+                course_marks[student_address] = [mark_data]
             else:
-                course_marks[student_address][mark_type] = grade
+                course_marks[student_address].append(mark_data)
             student_addresses.add(student_address)
         marks_per_course[course_id] = {'name': courses[i].get('data').get('name'), 'components': courses[i].get('metadata').get('components'), 'course_marks': course_marks}
     return {'student_addresses': list(student_addresses), 'marks_per_course': marks_per_course}
