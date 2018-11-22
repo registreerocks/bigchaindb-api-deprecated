@@ -5,9 +5,12 @@ from .getter_functions import (_get_all_assets, _get_asset_by_id,
                                _get_course_marks_by_lecturer,
                                _get_courses_by_degree, _get_marks_by_student)
 from .global_vars import ADMIN
-from .update_functions import (_course_add_requisite, _course_delete_requisite,
+from .update_functions import (_course_add_requisite,
+                               _course_average_update_one,
+                               _course_delete_requisite,
                                _degree_append_courses, _degree_delete_course,
                                _update_metadata_component)
+
 
 @requires_auth
 @requires_scope('registree')
@@ -145,3 +148,8 @@ def degree_get_courses(id, meta_flag):
 @requires_scope('admin', 'lecturer', 'registree')
 def get_course_marks_by_lecturer(lecturer):
     return _get_course_marks_by_lecturer(lecturer)
+
+@requires_auth
+@requires_scope('admin', 'lecturer', 'registree')
+def course_average_update_one(body):
+    return _course_average_update_one(body.get('student_address'), body.get('course_id'), ADMIN)

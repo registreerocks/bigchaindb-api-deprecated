@@ -555,6 +555,26 @@ paths:
               $ref: '#/components/schemas/MarkUpdate'
         description: mark id and new mark
         required: true
+  /course_average/update_one:
+    post:
+      tags:
+        - average
+      summary: update average for one student and one course
+      description: ''
+      operationId: course_average_update_one
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseAverageUpdate'
+        description: student address and course_id
+        required: true
 servers:
   - url: 'http://0.0.0.0:8000/v0.1'
 components:
@@ -838,6 +858,15 @@ components:
           maximum: 100
       xml:
         name: MarkUpdate
+    CourseAverageUpdate:
+      type: object
+      properties:
+        student_address:
+          type: string
+        course_id:
+          type: string
+      xml:
+        name: CourseAverageUpdate
   securitySchemes:
     bearerAuth:
       type: http
