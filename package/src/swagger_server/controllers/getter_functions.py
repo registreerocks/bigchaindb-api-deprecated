@@ -154,7 +154,8 @@ def add_course_info(marks, course_ids):
         
         marks[course_id] = {**marks[course_id], **course_asset}
         for c in course_metadata['components']:
-            marks[course_id]['components'][c['type']]['weighting'] = c['weighting']
+            if marks[course_id]['components'].get(c['type']):
+                marks[course_id]['components'][c['type']]['weighting'] = c['weighting']
             
     return marks
 
