@@ -6,14 +6,16 @@ from .global_vars import BDB, MDB
 def _course_average_update_one(student_address, course_id, admin):
     weights = _get_course_component_weights(course_id)
     student_marks = list(MDB.assets.find({'data.asset_type':'mark', 'data.student_address': student_address, 'data.course_id': course_id}))
-    _process_average_update(student_address, student_marks, course_id, weights, admin)
+    return _process_average_update(student_address, student_marks, course_id, weights, admin)
 
 def _course_average_update_course(course_id, admin):
     weights = _get_course_component_weights(course_id)
     marks = list(MDB.assets.find({'data.asset_type':'mark', 'data.course_id': course_id}))
     student_marks = _group(marks, 'student_address')
+    transaction_ids = [] 
     for student_address, marks in student_marks.items():
-        _process_average_update(student_address, marks, course_id, weights, admin)
+        transaction_ids.append(_process_average_update(student_address, marks, course_id, weights, admin))
+    return transaction_ids
 
 def _process_average_update(student_address, student_marks, course_id, weights, admin):
     grouped_marks = _group(student_marks, 'degree_id')
