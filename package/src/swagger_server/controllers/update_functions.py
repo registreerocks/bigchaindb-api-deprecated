@@ -3,12 +3,20 @@ from .general_functions import (_add_timestamp, _fulfill_transaction,
                                 _get_asset_metadata, _send_transaction)
 from .global_vars import BDB, MDB
 
-
 def _course_average_update_one(student_address, course_id, admin):
-    course_metadata = _get_asset_metadata(course_id)
-    weights = _weighting_dictionary(course_metadata['components'])
+    weights = _get_course_component_weights(course_id)
     student_marks = list(MDB.assets.find({'data.asset_type':'mark', 'data.student_address': student_address, 'data.course_id': course_id}))
-    grouped_marks = _group_by_degree(student_marks)
+    _process_average_update(student_address, student_marks, course_id, weights, admin)
+
+def _course_average_update_course(course_id, admin):
+    weights = _get_course_component_weights(course_id)
+    marks = list(MDB.assets.find({'data.asset_type':'mark', 'data.course_id': course_id}))
+    student_marks = _group(marks, 'student_address')
+    for student_address, marks in student_marks.items():
+        _process_average_update(student_address, marks, course_id, weights, admin)
+
+def _process_average_update(student_address, student_marks, course_id, weights, admin):
+    grouped_marks = _group(student_marks, 'degree_id')
     for degree_id, marks in grouped_marks.items():
         metadata = _compute_average(weights, marks)
         previous_average = MDB.assets.find_one({'data.asset_type':'course_average', 'data.student_address': student_address, 'data.course_id': course_id})
@@ -28,22 +36,25 @@ def _course_average_update_one(student_address, course_id, admin):
             }
             return _create(asset, metadata, admin)
 
-            
-
-def _group_by_degree(student_marks):
-    marks_by_degree = {}
-    for item in student_marks:
-        if not marks_by_degree.get(item['data']['degree_id']):
-            marks_by_degree[item['data']['degree_id']] = [item]
-        else:
-            marks_by_degree[item['data']['degree_id']].append(item)
-    return marks_by_degree
+def _get_course_component_weights(course_id):
+    course_metadata = _get_asset_metadata(course_id)
+    weights = _weighting_dictionary(course_metadata['components'])
+    return weights
 
 def _weighting_dictionary(component_list):
     dictionary = dict()
     for c in component_list:
         dictionary[c['type']] = c['weighting']
     return dictionary
+
+def _group(marks, grouping_param):
+    grouped_marks = {}
+    for item in marks:
+        if not grouped_marks.get(item['data'][grouping_param]):
+            grouped_marks[item['data'][grouping_param]] = [item]
+        else:
+            grouped_marks[item['data'][grouping_param]].append(item)
+    return grouped_marks
 
 def _compute_average(weights, student_marks):
     average = 0

@@ -6,6 +6,7 @@ from .getter_functions import (_get_all_assets, _get_asset_by_id,
                                _get_courses_by_degree, _get_marks_by_student)
 from .global_vars import ADMIN
 from .update_functions import (_course_add_requisite,
+                               _course_average_update_course,
                                _course_average_update_one,
                                _course_delete_requisite,
                                _degree_append_courses, _degree_delete_course,
@@ -153,3 +154,8 @@ def get_course_marks_by_lecturer(lecturer):
 @requires_scope('admin', 'lecturer', 'registree')
 def course_average_update_one(body):
     return _course_average_update_one(body.get('student_address'), body.get('course_id'), ADMIN)
+
+@requires_auth
+@requires_scope('admin', 'lecturer', 'registree')
+def course_average_update_course(body):
+    return _course_average_update_course(body.get('course_id'), ADMIN)
