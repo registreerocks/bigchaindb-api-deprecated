@@ -23,7 +23,7 @@ def _course_average_update_one(student_address, course_id, admin):
                     'student_address': student_address,
                     'course_id': course_id,
                     'degree_id': degree_id,
-                    # 'university_id': 
+                    'university_id': marks[0]['data']['university_id']
                 }
             }
             return _create(asset, metadata, admin)

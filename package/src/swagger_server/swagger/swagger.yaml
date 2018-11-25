@@ -736,6 +736,8 @@ components:
                   default: mark
                 student_address:
                   type: string
+                university_id:
+                  type: string
                 degree_id:
                   type: string
                 course_id:
