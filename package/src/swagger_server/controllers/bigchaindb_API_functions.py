@@ -5,7 +5,9 @@ from .getter_functions import (_get_all_assets, _get_asset_by_id,
                                _get_course_marks_by_lecturer,
                                _get_courses_by_degree, _get_marks_by_student)
 from .global_vars import ADMIN
+from .querying_functions import _get_top_x, _get_top_x_percent
 from .update_functions import (_course_add_requisite,
+                               _course_average_update_all,
                                _course_average_update_course,
                                _course_average_update_one,
                                _course_delete_requisite,
@@ -159,3 +161,18 @@ def course_average_update_one(body):
 @requires_scope('admin', 'lecturer', 'registree')
 def course_average_update_course(body):
     return _course_average_update_course(body.get('course_id'), ADMIN)
+
+@requires_auth
+@requires_scope('admin', 'lecturer', 'registree')
+def course_average_update_all():
+    return _course_average_update_all(ADMIN)
+
+@requires_auth
+@requires_scope('admin', 'lecturer', 'registree')
+def query_course_top_x(x, course_id):
+    return _get_top_x(x, course_id)
+
+@requires_auth
+@requires_scope('admin', 'lecturer', 'registree')
+def query_course_top_x_percent(x, course_id):
+    return _get_top_x_percent(x, course_id)

@@ -555,7 +555,7 @@ paths:
               $ref: '#/components/schemas/MarkUpdate'
         description: mark id and new mark
         required: true
-  /course_average/update_one:
+  /average/course/update_one:
     post:
       tags:
         - average
@@ -575,7 +575,7 @@ paths:
               $ref: '#/components/schemas/CourseAverageUpdateOne'
         description: student address and course_id
         required: true
-  /course_average/update:
+  /average/course/update:
     post:
       tags:
         - average
@@ -595,6 +595,72 @@ paths:
               $ref: '#/components/schemas/CourseAverageUpdate'
         description: course_id
         required: true
+  /average/course/update_all:
+    post:
+      tags:
+        - average
+      summary: update averages for courses
+      description: ''
+      operationId: course_average_update_all
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+  /query/course/top_x:
+    get:
+      tags:
+        - query
+      summary: 'returns top x course averages'
+      operationId: query_course_top_x
+      parameters:
+        - in: query
+          name: x
+          description: number of results to return
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+        - in: query
+          name: course_id
+          description: course id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+  /query/course/top_x_percent:
+    get:
+      tags:
+        - query
+      summary: 'returns top x percent of course averages'
+      operationId: query_course_top_x_percent
+      parameters:
+        - in: query
+          name: x
+          description: percentage number of results to return
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+        - in: query
+          name: course_id
+          description: course id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
 servers:
   - url: 'http://0.0.0.0:8000/v0.1'
 components:
