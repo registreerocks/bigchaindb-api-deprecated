@@ -17,6 +17,17 @@ def _course_average_update_course(course_id, admin):
         transaction_ids.append(_process_average_update(student_address, marks, course_id, weights, admin))
     return transaction_ids
 
+def _course_average_update_all(admin):
+    all_marks = list(MDB.assets.find({'data.asset_type':'mark'}))
+    course_marks = _group(all_marks, 'course_id')
+    transaction_ids = []
+    for course_id, c_marks in course_marks.items():
+        weights = _get_course_component_weights(course_id)
+        student_marks = _group(c_marks, 'student_address')
+        for student_address, s_marks in student_marks.items():
+            transaction_ids.append(_process_average_update(student_address, s_marks, course_id, weights, admin))
+    return transaction_ids
+
 def _process_average_update(student_address, student_marks, course_id, weights, admin):
     grouped_marks = _group(student_marks, 'degree_id')
     for degree_id, marks in grouped_marks.items():
