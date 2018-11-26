@@ -4,19 +4,19 @@ from .general_functions import _get_asset_data, _get_asset_metadata
 from .global_vars import MDB
 
 
-def _get_top_x(x, course_id):
-    averages = _retrieve_averages(course_id)
+def _get_top_x(x, _type, _id):
+    averages = _retrieve_averages(_type, _id)
     if x < len(averages):
         return averages[:x]
     else:
         return averages
 
-def _get_top_x_percent(x, course_id):
-    averages = _retrieve_averages(course_id)
+def _get_top_x_percent(x, _type, _id):
+    averages = _retrieve_averages(_type, _id)
     return _x_percent(x, averages)
 
-def _retrieve_averages(course_id):
-    assets = list(MDB.assets.find({'data.asset_type':'course_average', 'data.course_id': course_id}))
+def _retrieve_averages(_type, _id):
+    assets = list(MDB.assets.find({'data.asset_type': _type + '_average', 'data.' + _type + '_id': _id}))
     return _sort_averages(assets)
 
 def _sort_averages(assets):

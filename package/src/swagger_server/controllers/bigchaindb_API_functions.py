@@ -168,12 +168,12 @@ def course_average_update_all():
 @requires_auth
 @requires_scope('admin', 'lecturer', 'registree')
 def query_course_top_x(x, course_id):
-    return _get_top_x(x, course_id)
+    return _get_top_x(x, 'course', course_id)
 
 @requires_auth
 @requires_scope('admin', 'lecturer', 'registree')
 def query_course_top_x_percent(x, course_id):
-    return _get_top_x_percent(x, course_id)
+    return _get_top_x_percent(x, 'course', course_id)
 
 @requires_auth
 @requires_scope('admin', 'lecturer', 'registree')
@@ -189,3 +189,13 @@ def degree_average_update_degree(body):
 @requires_scope('admin', 'lecturer', 'registree')
 def degree_average_update_all():
     return _degree_average_update({'data.asset_type':'course_average'}, ADMIN)
+
+@requires_auth
+@requires_scope('admin', 'lecturer', 'registree')
+def query_degree_top_x(x, degree_id):
+    return _get_top_x(x, 'degree', degree_id)
+
+@requires_auth
+@requires_scope('admin', 'lecturer', 'registree')
+def query_degree_top_x_percent(x, degree_id):
+    return _get_top_x_percent(x, 'degree', degree_id)

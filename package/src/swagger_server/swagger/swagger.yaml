@@ -714,6 +714,59 @@ paths:
         '401':
           description: Authentication error
       x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+  /query/degree/top_x:
+    get:
+      tags:
+        - query
+      summary: 'returns top x degree averages'
+      operationId: query_degree_top_x
+      parameters:
+        - in: query
+          name: x
+          description: number of results to return
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+        - in: query
+          name: degree_id
+          description: degree id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+  /query/degree/top_x_percent:
+    get:
+      tags:
+        - query
+      summary: 'returns top x percent of degree averages'
+      operationId: query_degree_top_x_percent
+      parameters:
+        - in: query
+          name: x
+          description: percentage number of results to return
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+        - in: query
+          name: degree_id
+          description: degree id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
 servers:
   - url: 'http://0.0.0.0:8000/v0.1'
 components:
