@@ -6,12 +6,10 @@ from .getter_functions import (_get_all_assets, _get_asset_by_id,
                                _get_courses_by_degree, _get_marks_by_student)
 from .global_vars import ADMIN
 from .querying_functions import _get_top_x, _get_top_x_percent
-from .update_functions import (_course_add_requisite,
-                               _course_average_update_all,
-                               _course_average_update_course,
-                               _course_average_update_one,
+from .update_functions import (_course_add_requisite, _course_average_update,
                                _course_delete_requisite,
-                               _degree_append_courses, _degree_delete_course,
+                               _degree_append_courses, _degree_average_update,
+                               _degree_delete_course,
                                _update_metadata_component)
 
 
@@ -155,17 +153,17 @@ def get_course_marks_by_lecturer(lecturer):
 @requires_auth
 @requires_scope('admin', 'lecturer', 'registree')
 def course_average_update_one(body):
-    return _course_average_update_one(body.get('student_address'), body.get('course_id'), ADMIN)
+    return _course_average_update({'data.asset_type':'mark', 'data.student_address': body.get('student_address'), 'data.course_id': body.get('course_id')}, ADMIN)
 
 @requires_auth
 @requires_scope('admin', 'lecturer', 'registree')
 def course_average_update_course(body):
-    return _course_average_update_course(body.get('course_id'), ADMIN)
+    return _course_average_update({'data.asset_type':'mark', 'data.course_id': body.get('course_id')}, ADMIN)
 
 @requires_auth
 @requires_scope('admin', 'lecturer', 'registree')
 def course_average_update_all():
-    return _course_average_update_all(ADMIN)
+    return _course_average_update({'data.asset_type':'mark'}, ADMIN)
 
 @requires_auth
 @requires_scope('admin', 'lecturer', 'registree')
@@ -176,3 +174,18 @@ def query_course_top_x(x, course_id):
 @requires_scope('admin', 'lecturer', 'registree')
 def query_course_top_x_percent(x, course_id):
     return _get_top_x_percent(x, course_id)
+
+@requires_auth
+@requires_scope('admin', 'lecturer', 'registree')
+def degree_average_update_one(body):
+    return _degree_average_update({'data.asset_type':'course_average', 'data.student_address': body.get('student_address'), 'data.degree_id': body.get('degree_id')}, ADMIN)
+
+@requires_auth
+@requires_scope('admin', 'lecturer', 'registree')
+def degree_average_update_degree(body):
+    return _degree_average_update({'data.asset_type':'course_average', 'data.degree_id': body.get('degree_id')}, ADMIN)
+
+@requires_auth
+@requires_scope('admin', 'lecturer', 'registree')
+def degree_average_update_all():
+    return _degree_average_update({'data.asset_type':'course_average'}, ADMIN)

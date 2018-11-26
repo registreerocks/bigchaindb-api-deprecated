@@ -608,6 +608,59 @@ paths:
         '401':
           description: Authentication error
       x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+  /average/degree/update_one:
+    post:
+      tags:
+        - average
+      summary: update average for one student and one degree
+      description: ''
+      operationId: degree_average_update_one
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DegreeAverageUpdateOne'
+        description: student address and degree_id
+        required: true
+  /average/degree/update:
+    post:
+      tags:
+        - average
+      summary: update averages for all students of one degree
+      description: ''
+      operationId: degree_average_update_degree
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DegreeAverageUpdate'
+        description: degree_id
+        required: true
+  /average/degree/update_all:
+    post:
+      tags:
+        - average
+      summary: update averages for degrees
+      description: ''
+      operationId: degree_average_update_all
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
   /query/course/top_x:
     get:
       tags:
@@ -962,6 +1015,22 @@ components:
           type: string
       xml:
         name: CourseAverageUpdate
+    DegreeAverageUpdateOne:
+      type: object
+      properties:
+        student_address:
+          type: string
+        degree_id:
+          type: string
+      xml:
+        name: DegreeAverageUpdateOne
+    DegreeAverageUpdate:
+      type: object
+      properties:
+        degree_id:
+          type: string
+      xml:
+        name: DegreeAverageUpdate
   securitySchemes:
     bearerAuth:
       type: http
