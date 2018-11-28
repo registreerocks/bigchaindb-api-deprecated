@@ -555,6 +555,46 @@ paths:
               $ref: '#/components/schemas/MarkUpdate'
         description: mark id and new mark
         required: true
+  /course_average/update_one:
+    post:
+      tags:
+        - average
+      summary: update average for one student and one course
+      description: ''
+      operationId: course_average_update_one
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseAverageUpdateOne'
+        description: student address and course_id
+        required: true
+  /course_average/update:
+    post:
+      tags:
+        - average
+      summary: update averages for all students of one course
+      description: ''
+      operationId: course_average_update_course
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Authentication error
+      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseAverageUpdate'
+        description: course_id
+        required: true
 servers:
   - url: 'http://0.0.0.0:8000/v0.1'
 components:
@@ -716,6 +756,8 @@ components:
                   default: mark
                 student_address:
                   type: string
+                university_id:
+                  type: string
                 degree_id:
                   type: string
                 course_id:
@@ -838,6 +880,22 @@ components:
           maximum: 100
       xml:
         name: MarkUpdate
+    CourseAverageUpdateOne:
+      type: object
+      properties:
+        student_address:
+          type: string
+        course_id:
+          type: string
+      xml:
+        name: CourseAverageUpdateOne
+    CourseAverageUpdate:
+      type: object
+      properties:
+        course_id:
+          type: string
+      xml:
+        name: CourseAverageUpdate
   securitySchemes:
     bearerAuth:
       type: http

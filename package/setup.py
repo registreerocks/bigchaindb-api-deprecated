@@ -11,5 +11,5 @@ setup(
    packages=find_packages('src'),
    package_data={'swagger_server': ['swagger/swagger.yaml']},
 
-   install_requires=['bigchaindb-driver==0.5.0', 'flask_cors', 'python-dotenv', 'python-jose-cryptodome', 'pytest', 'mock'],
+   install_requires=['bigchaindb-driver==0.5.0', 'pymongo', 'flask_cors', 'python-dotenv', 'python-jose-cryptodome', 'pytest', 'mock'],
 )
