@@ -834,6 +834,9 @@ components:
                   type: string
                 university_id:
                   type: string
+                total_credits:
+                  type: integer
+                  minimum: 0
         metadata:
           type: object
           properties:
@@ -844,11 +847,9 @@ components:
                 properties:
                   course_id:
                     type: string
-                  weighting:
-                    type: number
-                    format: float
+                  credits:
+                    type: integer
                     minimum: 0
-                    maximum: 100
                   semester:
                     type: array
                     items:
@@ -960,11 +961,9 @@ components:
             properties:
               course_id:
                 type: string
-              weighting:
-                type: number
-                format: float
+              credits:
+                type: integer
                 minimum: 0
-                maximum: 100
               semester:
                 type: array
                 items:
