@@ -124,7 +124,6 @@ def process(mark_assets):
     course_ids = list()
     degree_ids = list()
     marks = dict()
-    print(mark_assets)
     for m in mark_assets:
         course_id = m['data']['course_id']
         degree_id = m['data']['degree_id']
