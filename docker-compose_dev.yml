@@ -12,6 +12,8 @@ services:
       AUTH0_DOMAIN: "registree.eu.auth0.com"
       API_IDENTIFIER: "https://registree.rocks/apis"
       ALGORITHMS: "['RS256']"
+      UPORT_ISSUER: "2ow5YgWEjhL1MGjk1Ze1z5znfrNnW3EjWtC"
+      UPORT_VALIDATION_URL: "http://178.62.244.76:8080/validateJWT"
     depends_on:
       - bigchaindb
     networks:
