@@ -1,6 +1,7 @@
 from .creation_functions import _create
 from .general_functions import (_add_timestamp, _fulfill_transaction,
-                                _get_asset_metadata, _send_transaction)
+                                _get_asset_data, _get_asset_metadata,
+                                _send_transaction)
 from .global_vars import BDB, MDB
 
 def _course_average_update(query_dict, admin):
@@ -56,7 +57,7 @@ def _compute_average(weights, marks, mark_key, weight_key):
         mark_metadata = _get_asset_metadata(mark['id'])
         average += mark_metadata[mark_key] * weights[mark['data'][weight_key]]
         sum_of_weights += weights[mark['data'][weight_key]]
-    if sum_of_weights == 1:
+    if sum_of_weights >= 1:
         return {'avg': average, 'complete': True}
     else:
         return {'avg': average, 'complete': False}
@@ -66,16 +67,22 @@ def _degree_average_update(query_dict, admin):
     course_averages_by_degree = _group(course_averages, 'degree_id')
     transaction_ids = []
     for degree_id, d_marks in course_averages_by_degree.items():
-        weights = _get_degree_component_weights(degree_id)
+        total_credit, credit = _get_degree_component_credits(degree_id)
+        weights = _compute_weights_from_credits(total_credit, credit)
         averages_by_student = _group(d_marks, 'student_address')
         for student_address, s_marks in averages_by_student.items():
             transaction_ids.append(process_degree_average_update(weights, s_marks, student_address, degree_id, admin))
     return transaction_ids
 
-def _get_degree_component_weights(degree_id):
+def _get_degree_component_credits(degree_id):
+    degree_data = _get_asset_data(degree_id)
+    total_credit = degree_data['total_credits']
     degree_metadata = _get_asset_metadata(degree_id)
-    weights = {item['course_id']: item['weighting'] for item in degree_metadata['courses']}
-    return weights
+    credit = {item['course_id']: item['credits'] for item in degree_metadata['courses']}
+    return (total_credit, credit)
+
+def _compute_weights_from_credits(total_credit, credit):
+    return {course_id: cred/total_credit for course_id, cred in credit.items()}
 
 def process_degree_average_update(weights, marks, student_address, degree_id, admin):
     metadata = _compute_average(weights, marks, 'avg', 'course_id')
