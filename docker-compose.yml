@@ -1,7 +1,6 @@
 version: '2.1'
 
 services:
-
   bigchaindb_api:
     build:
       context: .
@@ -47,18 +46,6 @@ services:
     image: tendermint/tendermint:0.22.8
     entrypoint: ''
     command: sh -c "tendermint init && tendermint node --consensus.create_empty_blocks=false --proxy_app=tcp://bigchaindb:26658"
-    networks:
-      - backbone
-
-  nginx:
-    restart: always
-    build: ./nginx
-    links:
-      - bigchaindb_api
-    ports:
-      - "8443:8443"
-    volumes:
-      - ~/cert:/etc/cert
     networks:
       - backbone
 
