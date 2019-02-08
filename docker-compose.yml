@@ -18,6 +18,7 @@ services:
       - bigchaindb
     networks:
       - backbone
+      - apiaggregator_interconnector
 
   mongodb:
     image: mongo:3.6
@@ -64,3 +65,5 @@ services:
 networks: 
   backbone:
     driver: bridge
+  apiaggregator_interconnector:
+    external: true
