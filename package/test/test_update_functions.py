@@ -3,8 +3,8 @@ import pytest
 from bigchaindb_driver import BigchainDB
 
 from src.swagger_server.controllers.update_functions import (_add_requisite,
-                                                             _append_course_list,
-                                                             _delete_course_from_list,
+                                                             _append_children_to_list,
+                                                             _delete_child_from_list,
                                                              _delete_requisite,
                                                              _update_component)
 
@@ -16,19 +16,19 @@ def test_append_course_list_appends():
                                     'weighting': 0.5},
                                     {'course_id': 'eeb5c64cbd331763b368cbcc922276ff571a3030243a509ba56cbb875f1c65b6',
                                     'weighting': 0.5}]}
-    assert (_append_course_list(tx, courses) == expected_output)
+    assert (_append_children_to_list(tx, courses, 'course') == expected_output)
 
 def test_append_course_list_doesnt_append():
     tx = get_degree_transaction()
     courses = [{'course_id': '6f4a3c43ec664373720ce1f8158b2779cfa0aec85954791a8ca766a1e53ef8bb', 'weighting': 0.5}]
     expected_output = {'courses': [{'course_id': '6f4a3c43ec664373720ce1f8158b2779cfa0aec85954791a8ca766a1e53ef8bb', 'weighting': 0.5}]}
-    assert (_append_course_list(tx, courses) == expected_output)
+    assert (_append_children_to_list(tx, courses, 'course') == expected_output)
 
 def test_delete_course():
     tx = get_degree_transaction()
     course = '6f4a3c43ec664373720ce1f8158b2779cfa0aec85954791a8ca766a1e53ef8bb'
     expected_output = {'courses': []}
-    assert (_delete_course_from_list(tx, course) == expected_output)
+    assert (_delete_child_from_list(tx, course, 'course') == expected_output)
 
 def test_update_component():
     tx = get_course_transaction()

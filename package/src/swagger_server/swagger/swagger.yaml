@@ -70,6 +70,32 @@ paths:
         description: University object that needs to be added to the database
         required: true
 
+  /university/get_faculties:
+    get:
+      tags:
+        - university
+      summary: returns all faculties of a university
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.university_get_faculties
+      parameters:
+        - in: query
+          name: id
+          description: Id of the university
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: meta_flag
+          description: True if metadata should be returned
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Authentication error
+        '409':
+          description: Conflict
+
   /university/get_degrees:
     get:
       tags:
@@ -121,6 +147,133 @@ paths:
           description: Authentication error
         '409':
           description: Conflict
+
+  /faculty/get_all:
+    get:
+      tags:
+        - faculty
+      summary: retrieve all faculties
+      description: ''
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.get_all_faculties
+      parameters:
+        - in: query
+          name: meta_flag
+          description: True if metadata should be returned
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Authentication error
+
+  /faculty/get_by_id:
+    get:
+      tags:
+        - faculty
+      summary: retrieve a faculty by its id
+      description: ''
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.faculty_get_by_id
+      parameters:
+        - in: query
+          name: id
+          description: Faculty id
+          schema:
+            type: string
+        - in: query
+          name: meta_flag
+          description: True if metadata should be returned
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Authentication error
+
+  /faculty/get_degrees:
+    get:
+      tags:
+        - faculty
+      summary: retrieve all degrees and their information belonging to a faculty
+      description: ''
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.faculty_get_degrees
+      parameters:
+        - in: query
+          name: id
+          description: Faculty id
+          schema:
+            type: string
+        - in: query
+          name: meta_flag
+          description: True if course metadata should be returned
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Authentication error
+
+  /faculty/create:
+    post:
+      tags:
+        - faculty
+      summary: create a new faculty
+      description: ''
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.create_faculty
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Authentication error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Faculty'
+        description: Faculty object that needs to be added to the database
+        required: true
+        
+  /faculty/append_degrees:
+    post:
+      tags:
+        - faculty
+      summary: append the list of degrees that belong to a faculty
+      description: ''
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.faculty_append_degrees
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Authentication error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FacultyAppendDegree'
+        description: List of degrees
+        required: true
+
+  /faculty/delete_degree:
+    post:
+      tags:
+        - faculty
+      summary: delete one degree from the faculty by degree_id
+      description: ''
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.faculty_delete_degree
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Authentication error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FacultyDeleteDegree'
+        description: Faculty and degree id to delete degree from faculty 
+        required: true
 
   /degree/get_all:
     get:
@@ -246,7 +399,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/DegreeDeleteCourse'
-        description: Degree object that needs to be added to the database
+        description: Degree and course id to delete course from degree 
         required: true
 
   /course/get_all:
@@ -812,6 +965,41 @@ components:
               format: date
       xml:
         name: University
+    Faculty:
+      type: object
+      properties:
+        asset:
+          type: object
+          properties:
+            data:
+              type: object
+              properties:
+                asset_type:
+                  type: string
+                  default: degree
+                name:
+                  type: string
+                description:
+                  type: string
+                id:
+                  type: string
+                university_id:
+                  type: string
+        metadata:
+          type: object
+          properties:
+            degrees:
+              type: array
+              items:
+                type: object
+                properties:
+                  degree_id:
+                    type: string
+            timestamp:
+              type: string
+              format: date
+      xml:
+        name: Faculty
     Degree:
       type: object
       properties:
@@ -833,6 +1021,8 @@ components:
                 id:
                   type: string
                 university_id:
+                  type: string
+                faculty_id:
                   type: string
                 total_credits:
                   type: integer
@@ -880,6 +1070,8 @@ components:
                 lecturer:
                   type: string
                 university_id:
+                  type: string
+                faculty_id:
                   type: string
         metadata:
           type: object
@@ -949,6 +1141,29 @@ components:
               format: date
       xml:
         name: Mark
+    FacultyAppendDegree:
+      type: object
+      properties:
+        faculty_id:
+          type: string
+        degrees:
+          type: array
+          items:
+            type: object
+            properties:
+              degree_id:
+                type: string
+      xml:
+        name: FacultyAppendDegree
+    FacultyDeleteDegree:
+      type: object
+      properties:
+        faculty_id:
+          type: string
+        degree_id:
+          type: string
+      xml:
+        name: FacultyDeleteDegree
     DegreeAppendCourses:
       type: object
       properties:
