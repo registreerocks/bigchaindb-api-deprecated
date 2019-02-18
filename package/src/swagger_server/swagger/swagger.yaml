@@ -957,12 +957,20 @@ components:
                   type: string
                 physical_address:
                   type: string
+                country:
+                  type: string
         metadata:
           type: object
           properties:
             timestamp:
               type: string
               format: date
+            website:
+              type: string
+            logo:
+              type: string
+            description:
+              type: string
       xml:
         name: University
     Faculty:
