@@ -182,7 +182,7 @@ def course_average_update_course(body):
 
 @requires_auth
 @requires_scope('admin', 'lecturer', 'registree')
-def course_average_update_all():
+def course_average_update_all(body):
     return _course_average_update({'data.asset_type':'mark'}, ADMIN)
 
 @requires_auth
@@ -207,7 +207,7 @@ def degree_average_update_degree(body):
 
 @requires_auth
 @requires_scope('admin', 'lecturer', 'registree')
-def degree_average_update_all():
+def degree_average_update_all(body):
     return _degree_average_update({'data.asset_type':'course_average'}, ADMIN)
 
 @requires_auth
