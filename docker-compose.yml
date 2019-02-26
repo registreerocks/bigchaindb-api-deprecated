@@ -1,7 +1,6 @@
 version: '2.1'
 
 services:
-
   bigchaindb_api:
     build:
       context: .
@@ -18,6 +17,7 @@ services:
       - bigchaindb
     networks:
       - backbone
+      - apiaggregator_interconnector
 
   mongodb:
     image: mongo:3.6
@@ -49,18 +49,8 @@ services:
     networks:
       - backbone
 
-  nginx:
-    restart: always
-    build: ./nginx
-    links:
-      - bigchaindb_api
-    ports:
-      - "8443:8443"
-    volumes:
-      - ~/cert:/etc/cert
-    networks:
-      - backbone
-
 networks: 
   backbone:
     driver: bridge
+  apiaggregator_interconnector:
+    external: true
