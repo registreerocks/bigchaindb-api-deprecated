@@ -24,6 +24,8 @@ services:
     command: mongod
     networks:
       - backbone
+    volumes:
+      - ./mongodata:/data/db
 
   bigchaindb:
     depends_on:
