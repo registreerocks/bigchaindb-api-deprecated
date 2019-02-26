@@ -1,3 +1,4 @@
+mongodata
 venv
 .vscode
 .ipynb_checkpoints
@@ -5,4 +6,3 @@ venv
 .pytest_cache
 *.egg-info
 playground
-.mongodata
