@@ -102,16 +102,16 @@ def process_degree_average_update(weights, marks, student_address, degree_id, ad
         }
         return _create(asset, metadata, admin)
 
-def _degree_append_courses(asset_id, courses, admin):
+def _append_children(asset_id, children, child_name, admin):
     tx, tx_id = _get_last_transaction(asset_id)
     transaction_input = _build_input(tx, tx_id)
-    metadata = _append_course_list(tx, courses)
+    metadata = _append_children_to_list(tx, children, child_name)
     return _process_update(asset_id, transaction_input, metadata, admin)
 
-def _degree_delete_course(asset_id, course_id, admin):
+def _delete_child(asset_id, child_id, child_name, admin):
     tx, tx_id = _get_last_transaction(asset_id)
     transaction_input = _build_input(tx, tx_id)
-    metadata = _delete_course_from_list(tx, course_id)
+    metadata = _delete_child_from_list(tx, child_id, child_name)
     return _process_update(asset_id, transaction_input, metadata, admin)
 
 def _update_metadata_component(updatable, asset_id, new_value, admin):
@@ -166,16 +166,16 @@ def _prepare_update_transaction(asset_id, tx_input, admin, metadata):
     )
     return tx_transfer
 
-def _append_course_list(tx, courses):
+def _append_children_to_list(tx, children, child_name):
     metadata = tx.get('metadata')
-    for course in courses:
-        if course not in metadata['courses']:
-            metadata['courses'].append(course)
+    for child in children:
+        if child not in metadata[child_name + 's']:
+            metadata[child_name + 's'].append(child)
     return metadata
 
-def _delete_course_from_list(tx, course_id):
+def _delete_child_from_list(tx, child_id, child_name):
     metadata = tx.get('metadata')
-    metadata['courses'] = [d for d in metadata['courses'] if d.get('course_id') != course_id]
+    metadata[child_name + 's'] = [d for d in metadata[child_name + 's'] if d.get(child_name + '_id') != child_id]
     return metadata
 
 def _update_component(updatable, tx, new_value):

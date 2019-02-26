@@ -13,7 +13,7 @@ paths:
         - university
       summary: retrieve all universities
       description: ''
-      operationId: get_all_universities
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.get_all_universities
       parameters:
         - in: query
           name: meta_flag
@@ -25,14 +25,14 @@ paths:
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+
   /university/get_by_id:
     get:
       tags:
         - university
       summary: retrieve a university by its id
       description: ''
-      operationId: university_get_by_id
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.university_get_by_id
       parameters:
         - in: query
           name: id
@@ -49,20 +49,19 @@ paths:
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+
   /university/create:
     post:
       tags:
         - university
       summary: create a new university
       description: ''
-      operationId: create_university
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.create_university
       responses:
         '200':
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
       requestBody:
         content:
           application/json:
@@ -70,12 +69,39 @@ paths:
               $ref: '#/components/schemas/University'
         description: University object that needs to be added to the database
         required: true
+
+  /university/get_faculties:
+    get:
+      tags:
+        - university
+      summary: returns all faculties of a university
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.university_get_faculties
+      parameters:
+        - in: query
+          name: id
+          description: Id of the university
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: meta_flag
+          description: True if metadata should be returned
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Authentication error
+        '409':
+          description: Conflict
+
   /university/get_degrees:
     get:
       tags:
         - university
       summary: returns all degrees of a university
-      operationId: university_get_degrees
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.university_get_degrees
       parameters:
         - in: query
           name: id
@@ -95,13 +121,13 @@ paths:
           description: Authentication error
         '409':
           description: Conflict
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+
   /university/get_courses:
     get:
       tags:
         - university
       summary: returns all courses of a university
-      operationId: university_get_courses
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.university_get_courses
       parameters:
         - in: query
           name: id
@@ -121,14 +147,141 @@ paths:
           description: Authentication error
         '409':
           description: Conflict
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+
+  /faculty/get_all:
+    get:
+      tags:
+        - faculty
+      summary: retrieve all faculties
+      description: ''
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.get_all_faculties
+      parameters:
+        - in: query
+          name: meta_flag
+          description: True if metadata should be returned
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Authentication error
+
+  /faculty/get_by_id:
+    get:
+      tags:
+        - faculty
+      summary: retrieve a faculty by its id
+      description: ''
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.faculty_get_by_id
+      parameters:
+        - in: query
+          name: id
+          description: Faculty id
+          schema:
+            type: string
+        - in: query
+          name: meta_flag
+          description: True if metadata should be returned
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Authentication error
+
+  /faculty/get_degrees:
+    get:
+      tags:
+        - faculty
+      summary: retrieve all degrees and their information belonging to a faculty
+      description: ''
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.faculty_get_degrees
+      parameters:
+        - in: query
+          name: id
+          description: Faculty id
+          schema:
+            type: string
+        - in: query
+          name: meta_flag
+          description: True if course metadata should be returned
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Authentication error
+
+  /faculty/create:
+    post:
+      tags:
+        - faculty
+      summary: create a new faculty
+      description: ''
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.create_faculty
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Authentication error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Faculty'
+        description: Faculty object that needs to be added to the database
+        required: true
+        
+  /faculty/append_degrees:
+    post:
+      tags:
+        - faculty
+      summary: append the list of degrees that belong to a faculty
+      description: ''
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.faculty_append_degrees
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Authentication error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FacultyAppendDegree'
+        description: List of degrees
+        required: true
+
+  /faculty/delete_degree:
+    post:
+      tags:
+        - faculty
+      summary: delete one degree from the faculty by degree_id
+      description: ''
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.faculty_delete_degree
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Authentication error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FacultyDeleteDegree'
+        description: Faculty and degree id to delete degree from faculty 
+        required: true
+
   /degree/get_all:
     get:
       tags:
         - degree
       summary: retrieve all degrees
       description: ''
-      operationId: get_all_degrees
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.get_all_degrees
       parameters:
         - in: query
           name: meta_flag
@@ -140,14 +293,14 @@ paths:
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+
   /degree/get_by_id:
     get:
       tags:
         - degree
       summary: retrieve a degree by its id
       description: ''
-      operationId: degree_get_by_id
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.degree_get_by_id
       parameters:
         - in: query
           name: id
@@ -164,14 +317,14 @@ paths:
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+
   /degree/get_courses:
     get:
       tags:
         - degree
       summary: retrieve all courses and their information belonging to a degree
       description: ''
-      operationId: degree_get_courses
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.degree_get_courses
       parameters:
         - in: query
           name: id
@@ -188,20 +341,19 @@ paths:
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+
   /degree/create:
     post:
       tags:
         - degree
       summary: create a new degree
       description: ''
-      operationId: create_degree
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.create_degree
       responses:
         '200':
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
       requestBody:
         content:
           application/json:
@@ -209,19 +361,19 @@ paths:
               $ref: '#/components/schemas/Degree'
         description: Degree object that needs to be added to the database
         required: true
+
   /degree/append_courses:
     post:
       tags:
         - degree
       summary: append the list of courses that belong to a degree
       description: ''
-      operationId: degree_append_courses
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.degree_append_courses
       responses:
         '200':
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
       requestBody:
         content:
           application/json:
@@ -229,33 +381,34 @@ paths:
               $ref: '#/components/schemas/DegreeAppendCourses'
         description: List of courses and their weightings
         required: true
+
   /degree/delete_course:
     post:
       tags:
         - degree
       summary: delete one course from the degree by course_id
       description: ''
-      operationId: degree_delete_course
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.degree_delete_course
       responses:
         '200':
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/DegreeDeleteCourse'
-        description: Degree object that needs to be added to the database
+        description: Degree and course id to delete course from degree 
         required: true
+
   /course/get_all:
     get:
       tags:
         - course
       summary: retrieve all courses
       description: ''
-      operationId: get_all_courses
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.get_all_courses
       parameters:
         - in: query
           name: meta_flag
@@ -267,14 +420,14 @@ paths:
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+
   /course/get_by_id:
     get:
       tags:
         - course
       summary: retrieve a course by its id
       description: ''
-      operationId: course_get_by_id
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.course_get_by_id
       parameters:
         - in: query
           name: id
@@ -291,14 +444,14 @@ paths:
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+
   /course/get_by_lecturer:
     get:
       tags:
         - course
       summary: retrieve all courses taught by one particular lecturer
       description: ''
-      operationId: course_get_by_lecturer
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.course_get_by_lecturer
       parameters:
         - in: query
           name: lecturer
@@ -315,14 +468,14 @@ paths:
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+
   /course/create:
     post:
       tags:
         - course
       summary: create a new course
       description: ''
-      operationId: create_course
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.create_course
       responses:
         '200':
           description: OK
@@ -330,7 +483,6 @@ paths:
           description: Authentication error
         '409':
           description: Conflict
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
       requestBody:
         content:
           application/json:
@@ -338,19 +490,19 @@ paths:
               $ref: '#/components/schemas/Course'
         description: Course object that needs to be added to the database
         required: true
+
   /course/update_passing:
     post:
       tags:
         - course
       summary: update the passing threshold of a course
       description: ''
-      operationId: course_update_passing
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.course_update_passing
       responses:
         '200':
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
       requestBody:
         content:
           application/json:
@@ -358,19 +510,19 @@ paths:
               $ref: '#/components/schemas/CourseUpdatePassing'
         description: course id and new passing threshold
         required: true
+
   /course/update_distinction:
     post:
       tags:
         - course
       summary: update the distinction threshold of a course
       description: ''
-      operationId: course_update_distinction
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.course_update_distinction
       responses:
         '200':
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
       requestBody:
         content:
           application/json:
@@ -378,19 +530,19 @@ paths:
               $ref: '#/components/schemas/CourseUpdateDistinction'
         description: course id and new distinction threshold
         required: true
+
   /course/update_components:
     post:
       tags:
         - course
       summary: update the components of a course
       description: ''
-      operationId: course_update_components
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.course_update_components
       responses:
         '200':
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
       requestBody:
         content:
           application/json:
@@ -398,79 +550,79 @@ paths:
               $ref: '#/components/schemas/CourseUpdateComponents'
         description: resubmit the whole component structure
         required: true
+
   /course/add_prerequisite:
     post:
       tags:
         - course
       summary: add a prerequisite to a course
       description: ''
-      operationId: course_add_prerequisite
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.course_add_prerequisite
       responses:
         '200':
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
       requestBody:
         $ref: '#/components/requestBodies/CoursePrerequisite'
+
   /course/delete_prerequisite:
     post:
       tags:
         - course
       summary: delete a prerequisite from a course
       description: ''
-      operationId: course_delete_prerequisite
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.course_delete_prerequisite
       responses:
         '200':
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
       requestBody:
         $ref: '#/components/requestBodies/CoursePrerequisite'
+
   /course/add_corequisite:
     post:
       tags:
         - course
       summary: add a corequisite to a course
       description: ''
-      operationId: course_add_corequisite
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.course_add_corequisite
       responses:
         '200':
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
       requestBody:
         $ref: '#/components/requestBodies/CourseCorequisite'
+
   /course/delete_corequisite:
     post:
       tags:
         - course
       summary: delete a corequisite from a course
       description: ''
-      operationId: course_delete_corequisite
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.course_delete_corequisite
       responses:
         '200':
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
       requestBody:
         $ref: '#/components/requestBodies/CourseCorequisite'
+
   /mark/create:
     post:
       tags:
         - mark
       summary: create a new mark
       description: ''
-      operationId: create_mark
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.create_mark
       responses:
         '200':
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
       requestBody:
         content:
           application/json:
@@ -478,12 +630,13 @@ paths:
               $ref: '#/components/schemas/Mark'
         description: Mark object that needs to be added to the database
         required: true
+
   /mark/get_by_student:
     get:
       tags:
         - mark
       summary: returns all marks for a particular student
-      operationId: get_marks_by_student
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.get_marks_by_student
       parameters:
         - in: query
           name: student_address
@@ -496,13 +649,13 @@ paths:
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+
   /mark/get_by_course:
     get:
       tags:
         - mark
       summary: returns all marks for a particular course
-      operationId: get_marks_by_course_id
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.get_marks_by_course_id
       parameters:
         - in: query
           name: id
@@ -515,13 +668,13 @@ paths:
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+
   /mark/get_by_lecturer:
     get:
       tags:
         - mark
       summary: 'returns all marks for a lecturer, grouped by courses and students'
-      operationId: get_course_marks_by_lecturer
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.get_course_marks_by_lecturer
       parameters:
         - in: query
           name: lecturer
@@ -534,20 +687,19 @@ paths:
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+
   /mark/update:
     post:
       tags:
         - mark
       summary: update a student's mark
       description: ''
-      operationId: mark_update
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.mark_update
       responses:
         '200':
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
       requestBody:
         content:
           application/json:
@@ -555,19 +707,19 @@ paths:
               $ref: '#/components/schemas/MarkUpdate'
         description: mark id and new mark
         required: true
+
   /average/course/update_one:
     post:
       tags:
         - average
       summary: update average for one student and one course
       description: ''
-      operationId: course_average_update_one
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.course_average_update_one
       responses:
         '200':
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
       requestBody:
         content:
           application/json:
@@ -575,19 +727,19 @@ paths:
               $ref: '#/components/schemas/CourseAverageUpdateOne'
         description: student address and course_id
         required: true
+
   /average/course/update:
     post:
       tags:
         - average
       summary: update averages for all students of one course
       description: ''
-      operationId: course_average_update_course
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.course_average_update_course
       responses:
         '200':
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
       requestBody:
         content:
           application/json:
@@ -595,32 +747,32 @@ paths:
               $ref: '#/components/schemas/CourseAverageUpdate'
         description: course_id
         required: true
+
   /average/course/update_all:
     post:
       tags:
         - average
       summary: update averages for courses
       description: ''
-      operationId: course_average_update_all
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.course_average_update_all
       responses:
         '200':
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+
   /average/degree/update_one:
     post:
       tags:
         - average
       summary: update average for one student and one degree
       description: ''
-      operationId: degree_average_update_one
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.degree_average_update_one
       responses:
         '200':
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
       requestBody:
         content:
           application/json:
@@ -628,19 +780,19 @@ paths:
               $ref: '#/components/schemas/DegreeAverageUpdateOne'
         description: student address and degree_id
         required: true
+
   /average/degree/update:
     post:
       tags:
         - average
       summary: update averages for all students of one degree
       description: ''
-      operationId: degree_average_update_degree
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.degree_average_update_degree
       responses:
         '200':
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
       requestBody:
         content:
           application/json:
@@ -648,25 +800,26 @@ paths:
               $ref: '#/components/schemas/DegreeAverageUpdate'
         description: degree_id
         required: true
+
   /average/degree/update_all:
     post:
       tags:
         - average
       summary: update averages for degrees
       description: ''
-      operationId: degree_average_update_all
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.degree_average_update_all
       responses:
         '200':
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+
   /query/course/top_x:
     get:
       tags:
         - query
       summary: 'returns top x course averages'
-      operationId: query_course_top_x
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.query_course_top_x
       parameters:
         - in: query
           name: x
@@ -686,13 +839,13 @@ paths:
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+
   /query/course/top_x_percent:
     get:
       tags:
         - query
       summary: 'returns top x percent of course averages'
-      operationId: query_course_top_x_percent
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.query_course_top_x_percent
       parameters:
         - in: query
           name: x
@@ -713,13 +866,13 @@ paths:
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+
   /query/degree/top_x:
     get:
       tags:
         - query
       summary: 'returns top x degree averages'
-      operationId: query_degree_top_x
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.query_degree_top_x
       parameters:
         - in: query
           name: x
@@ -739,13 +892,13 @@ paths:
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+
   /query/degree/top_x_percent:
     get:
       tags:
         - query
       summary: 'returns top x percent of degree averages'
-      operationId: query_degree_top_x_percent
+      operationId:  swagger_server.controllers.bigchaindb_API_functions.query_degree_top_x_percent
       parameters:
         - in: query
           name: x
@@ -766,7 +919,7 @@ paths:
           description: OK
         '401':
           description: Authentication error
-      x-swagger-router-controller: swagger_server.controllers.bigchaindb_API_functions
+
 servers:
   - url: 'http://0.0.0.0:8000/v0.1'
 components:
@@ -804,14 +957,57 @@ components:
                   type: string
                 physical_address:
                   type: string
+                country:
+                  type: string
         metadata:
           type: object
           properties:
             timestamp:
               type: string
               format: date
+            website:
+              type: string
+            logo:
+              type: string
+            description:
+              type: string
       xml:
         name: University
+    Faculty:
+      type: object
+      properties:
+        asset:
+          type: object
+          properties:
+            data:
+              type: object
+              properties:
+                asset_type:
+                  type: string
+                  default: degree
+                name:
+                  type: string
+                description:
+                  type: string
+                id:
+                  type: string
+                university_id:
+                  type: string
+        metadata:
+          type: object
+          properties:
+            degrees:
+              type: array
+              items:
+                type: object
+                properties:
+                  degree_id:
+                    type: string
+            timestamp:
+              type: string
+              format: date
+      xml:
+        name: Faculty
     Degree:
       type: object
       properties:
@@ -833,6 +1029,8 @@ components:
                 id:
                   type: string
                 university_id:
+                  type: string
+                faculty_id:
                   type: string
                 total_credits:
                   type: integer
@@ -880,6 +1078,8 @@ components:
                 lecturer:
                   type: string
                 university_id:
+                  type: string
+                faculty_id:
                   type: string
         metadata:
           type: object
@@ -949,6 +1149,29 @@ components:
               format: date
       xml:
         name: Mark
+    FacultyAppendDegree:
+      type: object
+      properties:
+        faculty_id:
+          type: string
+        degrees:
+          type: array
+          items:
+            type: object
+            properties:
+              degree_id:
+                type: string
+      xml:
+        name: FacultyAppendDegree
+    FacultyDeleteDegree:
+      type: object
+      properties:
+        faculty_id:
+          type: string
+        degree_id:
+          type: string
+      xml:
+        name: FacultyDeleteDegree
     DegreeAppendCourses:
       type: object
       properties:
@@ -1083,10 +1306,3 @@ components:
           type: string
       xml:
         name: DegreeAverageUpdate
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-security:
-  - bearerAuth: []

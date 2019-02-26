@@ -28,5 +28,5 @@ def _sort_averages(assets):
     return sorted(course_averages, key=lambda k: k['avg'], reverse=True)
 
 def _x_percent(x, sorted_averages):
-    y = math.floor(x/100 * len(sorted_averages))
+    y = math.ceil(x/100 * len(sorted_averages))
     return sorted_averages[:y]

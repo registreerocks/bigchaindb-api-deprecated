@@ -172,14 +172,14 @@ def _get_asset_by_id(asset_id, meta_flag):
     else:
         return {'data': asset[0].get('asset').get('data'), 'id': asset[0].get('id'), 'metadata': asset[-1].get('metadata')}
 
-def _get_courses_by_degree(_id, meta_flag):
-    degree = _get_asset_by_id(_id, True)
-    courses = degree.get('metadata').get('courses')
+def _get_children(_id, meta_flag, parent_name, child_name):
+    parent = _get_asset_by_id(_id, True)
+    children = parent.get('metadata').get(child_name + 's')
     collection = []
-    for course in courses:
-        course_id = course.get('course_id')
-        course = _get_asset_by_id(course_id, meta_flag)
-        collection.append({**course, **{'degree_info': course}})
+    for child in children:
+        child_id = child.get(child_name + '_id')
+        child = _get_asset_by_id(child_id, meta_flag)
+        collection.append({**child, **{parent_name + '_info': parent}})
     return collection
 
 def _get_course_marks_by_lecturer(lecturer):
