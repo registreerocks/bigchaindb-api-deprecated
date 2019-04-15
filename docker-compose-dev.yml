@@ -1,13 +1,12 @@
 version: '2.1'
 
 services:
-
   bigchaindb_api:
     build:
       context: .
       dockerfile: Dockerfile_dev
     ports:
-      - "5000:5000"
+      - "8000:5000"
     environment:
       AUTH0_DOMAIN: "registree.eu.auth0.com"
       API_IDENTIFIER: "https://registree.rocks/apis"
