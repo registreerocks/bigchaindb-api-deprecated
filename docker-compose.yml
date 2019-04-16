@@ -1,4 +1,4 @@
-version: '2.1'
+version: '3'
 
 services:
   bigchaindb_api:
@@ -47,6 +47,8 @@ services:
   tendermint:
     image: tendermint/tendermint:0.22.8
     entrypoint: ''
+    logging:
+      driver: none
     command: sh -c "tendermint init && tendermint node --consensus.create_empty_blocks=false --proxy_app=tcp://bigchaindb:26658"
     networks:
       - backbone
