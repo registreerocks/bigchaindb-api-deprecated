@@ -41,6 +41,16 @@ def create_mark(body):
     return _create(body.get('asset'), body.get('metadata'), ADMIN)
 
 @requires_auth
+@requires_scope('admin', 'lecturer', 'registree')
+def create_course_average(body):
+    return _create(body.get('asset'), body.get('metadata'), ADMIN)
+
+@requires_auth
+@requires_scope('admin', 'registree')
+def create_degree_average(body):
+    return _create(body.get('asset'), body.get('metadata'), ADMIN)
+
+@requires_auth
 @requires_scope('admin', 'registree')
 def degree_append_courses(body):
     return _append_children(body.get('degree_id'), body.get('courses'), 'course', ADMIN)
@@ -170,20 +180,20 @@ def degree_get_courses(id, meta_flag):
 def get_course_marks_by_lecturer(lecturer):
     return _get_course_marks_by_lecturer(lecturer)
 
-@requires_auth
-@requires_scope('admin', 'lecturer', 'registree')
-def course_average_update_one(body):
-    return _course_average_update({'data.asset_type':'mark', 'data.student_address': body.get('student_address'), 'data.course_id': body.get('course_id')}, ADMIN)
+# @requires_auth
+# @requires_scope('admin', 'lecturer', 'registree')
+# def course_average_update_one(body):
+#     return _course_average_update({'data.asset_type':'mark', 'data.student_address': body.get('student_address'), 'data.course_id': body.get('course_id')}, ADMIN)
 
-@requires_auth
-@requires_scope('admin', 'lecturer', 'registree')
-def course_average_update_course(body):
-    return _course_average_update({'data.asset_type':'mark', 'data.course_id': body.get('course_id')}, ADMIN)
+# @requires_auth
+# @requires_scope('admin', 'lecturer', 'registree')
+# def course_average_update_course(body):
+#     return _course_average_update({'data.asset_type':'mark', 'data.course_id': body.get('course_id')}, ADMIN)
 
-@requires_auth
-@requires_scope('admin', 'lecturer', 'registree')
-def course_average_update_all(body):
-    return _course_average_update({'data.asset_type':'mark'}, ADMIN)
+# @requires_auth
+# @requires_scope('admin', 'lecturer', 'registree')
+# def course_average_update_all(body):
+#     return _course_average_update({'data.asset_type':'mark'}, ADMIN)
 
 @requires_auth
 @requires_scope('admin', 'lecturer', 'registree', 'recruiter')
@@ -195,20 +205,20 @@ def query_course_top_x(x, course_id):
 def query_course_top_x_percent(x, course_id):
     return _get_top_x_percent(x, 'course', course_id)
 
-@requires_auth
-@requires_scope('admin', 'lecturer', 'registree')
-def degree_average_update_one(body):
-    return _degree_average_update({'data.asset_type':'course_average', 'data.student_address': body.get('student_address'), 'data.degree_id': body.get('degree_id')}, ADMIN)
+# @requires_auth
+# @requires_scope('admin', 'lecturer', 'registree')
+# def degree_average_update_one(body):
+#     return _degree_average_update({'data.asset_type':'course_average', 'data.student_address': body.get('student_address'), 'data.degree_id': body.get('degree_id')}, ADMIN)
 
-@requires_auth
-@requires_scope('admin', 'lecturer', 'registree')
-def degree_average_update_degree(body):
-    return _degree_average_update({'data.asset_type':'course_average', 'data.degree_id': body.get('degree_id')}, ADMIN)
+# @requires_auth
+# @requires_scope('admin', 'lecturer', 'registree')
+# def degree_average_update_degree(body):
+#     return _degree_average_update({'data.asset_type':'course_average', 'data.degree_id': body.get('degree_id')}, ADMIN)
 
-@requires_auth
-@requires_scope('admin', 'lecturer', 'registree')
-def degree_average_update_all(body):
-    return _degree_average_update({'data.asset_type':'course_average'}, ADMIN)
+# @requires_auth
+# @requires_scope('admin', 'lecturer', 'registree')
+# def degree_average_update_all(body):
+#     return _degree_average_update({'data.asset_type':'course_average'}, ADMIN)
 
 @requires_auth
 @requires_scope('admin', 'lecturer', 'registree', 'recruiter')
