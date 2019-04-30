@@ -1189,9 +1189,7 @@ components:
           type: object
           properties:
             mark:
-              type: integer
-              minimum: 0
-              maximum: 100
+              type: string
             timestamp:
               type: string
               format: date
@@ -1317,9 +1315,7 @@ components:
         mark_id:
           type: string
         mark:
-          type: integer
-          minimum: 0
-          maximum: 100
+          type: string
       xml:
         name: MarkUpdate
     # CourseAverageUpdateOne:
@@ -1386,9 +1382,7 @@ components:
           type: object
           properties:
             avg:
-              type: integer
-              minimum: 0
-              maximum: 100
+              type: string
             complete:
               type: boolean
               default: True
@@ -1423,9 +1417,7 @@ components:
           type: object
           properties:
             avg:
-              type: number
-              minimum: 0
-              maximum: 100
+              type: string
             complete:
               type: boolean
             timestamp:
