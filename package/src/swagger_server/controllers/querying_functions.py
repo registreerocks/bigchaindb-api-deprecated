@@ -20,12 +20,17 @@ def _retrieve_averages(_type, _id):
     return _sort_averages(assets)
 
 def _sort_averages(assets):
-    course_averages = list()
+    average_dict = {}
     for asset in assets:
-        average = _get_asset_metadata(asset['id'])
-        average['student_address'] = asset['data']['student_address']
-        course_averages.append(average)
-    return sorted(course_averages, key=lambda k: k['avg'], reverse=True)
+        student_address = asset['data']['student_address']
+        term = asset['data']['term']
+        if average_dict.get(student_address, {'term': 0})['term'] <= term:
+            average = _get_asset_metadata(asset['id'])
+            average['student_address'] = asset['data']['student_address']
+            average['term'] = term
+            average_dict[student_address] = average
+    averages = [ v for v in average_dict.values() ]
+    return sorted(averages, key=lambda k: k['avg'], reverse=True)
 
 def _x_percent(x, sorted_averages):
     y = math.ceil(x/100 * len(sorted_averages))
