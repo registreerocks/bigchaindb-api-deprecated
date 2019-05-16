@@ -166,7 +166,7 @@ def course_get_by_id(id, meta_flag):
     return _get_asset_by_id(id, meta_flag)
 
 @requires_auth
-@requires_scope('admin', 'lecturer', 'student')
+@requires_scope('admin', 'lecturer', 'student', 'registree')
 def get_marks_by_course_id(id):
     return _get_assets_by_key('mark', 'course_id', id, True)
 
