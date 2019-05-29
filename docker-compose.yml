@@ -2,9 +2,7 @@ version: '3'
 
 services:
   bigchaindb_api:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: registree/bigchaindb-api:latest
     ports:
       - "8002:8000"
     environment:
